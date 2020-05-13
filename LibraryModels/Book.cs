@@ -1,30 +1,33 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library_Models
 {
-    class Book
+    public class Book
     {
         //Book data properties
-        private int Code { get; set; }
-        public int ISBN { get; set; }
+        [Key]
+        public long Id { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string Code { get; set; }
+        [Required]
+        public string Author { get; set; }
+        [Required]
         public string Title { get; set; }
+        public ushort Year { get; set; }
         //Book status properties
-        public bool Available { get; set; }
-        public Lending LendData { get; set; }
-
-        //Create a single new book
-        public Book(int code, int isbn, string title)
-        {
-            Code = code;
-            ISBN = isbn;
-            Title = title;
-            Available = true;
-            LendData = null;
-        }
+        [Required]
+        public bool Borrowed { get; set; }
+        [MaxLength(30)]
+        public string BorrowerFirstName { get; set; }
+        [MaxLength(30)]
+        public string BorrowerLastName { get; set; }
+        public DateTime? ReturnUntil { get; set; }
 
         public override string ToString()
         {
-            return base.ToString();
+            return $"{Code}-{Title}({Year})";
         }
     }
 }

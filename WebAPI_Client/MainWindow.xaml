@@ -13,10 +13,10 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="People" Margin="15" FontWeight="Bold"/>
+        <Label Grid.Row="0" Content="Felhasználók" Margin="15" FontWeight="Bold"/>
 
         <ListBox Grid.Row="1" x:Name="PeopleListBox" Margin="15, 0, 15, 15" SelectionMode="Single" SelectionChanged="PeopleListBox_SelectionChanged"/>
 
-        <Button Grid.Row="2" x:Name="AddPersonButton" Content="Add person" Width="150" HorizontalAlignment="Right" Margin="15, 0, 15, 15" Click="AddPersonButton_Click"/>
+        <Button Grid.Row="2" x:Name="AddPersonButton" Content="Felhasználó hozzáadása" Width="150" HorizontalAlignment="Right" Margin="15, 0, 15, 15" Click="AddPersonButton_Click"/>
     </Grid>
 </Window>

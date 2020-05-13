@@ -10,13 +10,14 @@ namespace Library_Models
         [Required]
         [MaxLength(30)]
         public string FirstName { get; set; }
+        [Required]
         [MaxLength(30)]
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName}";
+            return $"{LastName} {FirstName}";
         }
     }
 }

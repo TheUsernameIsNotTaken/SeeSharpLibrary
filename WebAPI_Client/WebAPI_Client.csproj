@@ -137,6 +137,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataProviders\BookDataProvider.cs" />
     <Compile Include="DataProviders\PersonDataProvider.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

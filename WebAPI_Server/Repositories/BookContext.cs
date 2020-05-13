@@ -1,16 +1,15 @@
-﻿using Library_Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Library_Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebAPI_Server.Repositories
 {
-    public class PersonContext : DbContext
+    public class BookContext : DbContext
     {
-        public DbSet<Person> People { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
