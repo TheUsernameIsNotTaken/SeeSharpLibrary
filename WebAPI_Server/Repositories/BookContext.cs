@@ -17,12 +17,5 @@ namespace WebAPI_Server.Repositories
                 "Data Source=(localdb)\\mssqllocaldb;Database=ServerDb;Integrated Security=True;"
             );
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Book>()
-                .HasOne(b => b.Borrower)
-                .WithMany(p => p.BorrowedBooks);
-        }
     }
 }

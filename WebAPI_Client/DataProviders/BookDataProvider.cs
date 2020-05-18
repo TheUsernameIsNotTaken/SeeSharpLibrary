@@ -11,7 +11,26 @@ namespace WebAPI_Client.DataProviders
     {
         private static string _url = "http://localhost:5000/api/book";
 
-        public static IList<Book> GetBook()
+        public static Book GetBook(string code)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.GetAsync(_url + "/" + code).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var rawData = response.Content.ReadAsStringAsync().Result;
+                    var book = JsonConvert.DeserializeObject<Book>(rawData);
+                    return book;
+                }
+                else
+                {
+                    throw new InvalidOperationException(response.StatusCode.ToString());
+                }
+            }
+        }
+
+        public static IList<Book> GetBooks()
         {
             using (var client = new HttpClient())
             {
@@ -20,8 +39,8 @@ namespace WebAPI_Client.DataProviders
                 if (response.IsSuccessStatusCode)
                 {
                     var rawData = response.Content.ReadAsStringAsync().Result;
-                    var book = JsonConvert.DeserializeObject<IList<Book>>(rawData);
-                    return book;
+                    var books = JsonConvert.DeserializeObject<IList<Book>>(rawData);
+                    return books;
                 }
                 else
                 {
@@ -52,12 +71,20 @@ namespace WebAPI_Client.DataProviders
                 var rawData = JsonConvert.SerializeObject(book);
                 var content = new StringContent(rawData, Encoding.UTF8, "application/json");
 
-                var response = client.PutAsync(_url, content).Result;
+                var response = client.PutAsync(_url + "/" + book.Id, content).Result;
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new InvalidOperationException(response.StatusCode.ToString());
                 }
             }
+        }
+
+        public static void BorrowedBy(Book book, Person person)
+        {
+            book.BorrowerId = person.Id;
+            book.BorrowedAt = DateTime.Now;
+            book.ReturnUntil = book.BorrowedAt.Value.AddDays(Book.BORROWINGWEEKS * 7) ;
+            UpdateBook(book);
         }
 
         public static void DeleteBook(long id)

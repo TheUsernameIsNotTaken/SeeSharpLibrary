@@ -23,6 +23,7 @@ namespace WebAPI_Client
     public partial class MainWindow : Window
     {
         private IList<Person> _people;
+        private Person _selectedPerson;
 
         public MainWindow()
         {
@@ -31,35 +32,66 @@ namespace WebAPI_Client
             UpdatePeople();
         }
 
-        private void AddPersonButton_Click(object sender, RoutedEventArgs e)
+        private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
         {
-            var window = new PersonWindow(null);
-            if (window.ShowDialog() ?? false)
+            if (_selectedPerson != null)
             {
-                UpdatePeople();
-            }
-        }
-
-        private void PeopleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedPerson = PeopleListBox.SelectedItem as Person;
-
-            if (selectedPerson != null)
-            {
-                var window = new PersonWindow(selectedPerson);
+                var window = new BookPickerWindow(_selectedPerson);
                 if (window.ShowDialog() ?? false)
                 {
                     UpdatePeople();
                 }
-
                 PeopleListBox.UnselectAll();
             }
+            else
+            {
+                MessageBox.Show("Kölcsönzés előtt kérem válassza ki, hogy ki akar kölcsönözni!",
+                                        "Kölcsönző nem található!",
+                                        MessageBoxButton.OK);
+            }
+        }
+
+        private void AddBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new BookWindow(null);
+            if (window.ShowDialog() ?? false)
+            {
+                UpdatePeople();
+            }
+            PeopleListBox.UnselectAll();
+        }
+
+        private void AddPersonButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedPerson != null)
+            {
+                var window = new PersonWindow(_selectedPerson);
+                if (window.ShowDialog() ?? false)
+                {
+                    UpdatePeople();
+                }
+            }
+            else
+            {
+                var window = new PersonWindow(null);
+                if (window.ShowDialog() ?? false)
+                {
+                    UpdatePeople();
+                }
+            }
+            PeopleListBox.UnselectAll();
+        }
+
+        private void PeopleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _selectedPerson = PeopleListBox.SelectedItem as Person;
         }
 
         private void UpdatePeople()
         {
             _people = PersonDataProvider.GetPeople();
             PeopleListBox.ItemsSource = _people;
+            _selectedPerson = null;
         }
     }
 }

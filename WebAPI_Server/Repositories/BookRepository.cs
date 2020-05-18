@@ -28,6 +28,15 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        public static Book GetBookByCode(string code)
+        {
+            using (var database = new BookContext())
+            {
+                var book = database.Books.Where(b => b.Code == code).FirstOrDefault();
+                return book;
+            }
+        }
+
         public static void AddBooks(IList<Book> books)
         {
             using (var database = new BookContext())

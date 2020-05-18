@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebAPI_Server.Migrations
+namespace WebAPI_Server.Migrations.Book
 {
-    public partial class PersonRefactorManyToOne : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Book",
+                name: "Books",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -24,25 +24,14 @@ namespace WebAPI_Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Book", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Book_People_BorrowerId",
-                        column: x => x.BorrowerId,
-                        principalTable: "People",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Book_BorrowerId",
-                table: "Book",
-                column: "BorrowerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Book");
+                name: "Books");
         }
     }
 }

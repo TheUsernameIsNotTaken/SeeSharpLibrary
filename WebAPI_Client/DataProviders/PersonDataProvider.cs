@@ -52,12 +52,16 @@ namespace WebAPI_Client.DataProviders
                 var rawData = JsonConvert.SerializeObject(person);
                 var content = new StringContent(rawData, Encoding.UTF8, "application/json");
 
-                var response = client.PutAsync(_url, content).Result;
+                var response = client.PutAsync(_url + "/" + person.Id, content).Result;
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new InvalidOperationException(response.StatusCode.ToString());
                 }
             }
+        }
+        public static void BorrowBook(Person person, Book book)
+        {
+            BookDataProvider.BorrowedBy(book, person);
         }
 
         public static void DeletePerson(long id)

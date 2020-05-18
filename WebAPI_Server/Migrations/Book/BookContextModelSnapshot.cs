@@ -57,41 +57,7 @@ namespace WebAPI_Server.Migrations.Book
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BorrowerId");
-
                     b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("Library_Models.Person", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("Library_Models.Book", b =>
-                {
-                    b.HasOne("Library_Models.Person", "Borrower")
-                        .WithMany("BorrowedBooks")
-                        .HasForeignKey("BorrowerId");
                 });
 #pragma warning restore 612, 618
         }

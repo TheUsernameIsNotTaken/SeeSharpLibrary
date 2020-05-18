@@ -39,11 +39,6 @@ namespace Library_Models
         /// </value>
         public DateTime DateOfBirth { get; set; }
 
-        /// <value>
-        /// Property <c>BorrowedBooks</c> contains a collection of books borrowed by this Person.
-        /// </value>
-        public ICollection<Book> BorrowedBooks { get; set; }
-
         /// <summary>Reports the Person's data as a string.</summary>
         /// <returns>
         /// The Persons's first and last name, with the date of birth in the following form:

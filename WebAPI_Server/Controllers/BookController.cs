@@ -35,6 +35,21 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        [HttpGet("{code}")]
+        public ActionResult<Book> Get(string code)
+        {
+            var book = BookRepository.GetBookByCode(code);
+            //Check successs
+            if (book != null)
+            {
+                return Ok(book);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost]
         public ActionResult Post(Book book)
         {

@@ -10,8 +10,8 @@ using WebAPI_Server.Repositories;
 namespace WebAPI_Server.Migrations.Book
 {
     [DbContext(typeof(BookContext))]
-    [Migration("20200513111328_BookUpd2")]
-    partial class BookUpd2
+    [Migration("20200518122544_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,15 +28,24 @@ namespace WebAPI_Server.Migrations.Book
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Borrowed")
-                        .HasColumnType("bit");
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BorrowerName")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                    b.Property<DateTime?>("BorrowedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<long>("ISBN")
+                    b.Property<long?>("BorrowerId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Place")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime?>("ReturnUntil")
                         .HasColumnType("datetime2");
@@ -44,6 +53,9 @@ namespace WebAPI_Server.Migrations.Book
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

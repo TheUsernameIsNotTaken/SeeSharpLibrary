@@ -11,6 +11,10 @@ namespace Library_Models
     /// </remarks>
     public class Book
     {
+        /// <summary>
+        /// Constant <c>BORROWINGWEEKS</c> defines the # of weeks, that a person can borrow a book.
+        /// </summary>
+        public static readonly int BORROWINGWEEKS = 3;
         // Book data properties:
         /// <value>
         /// Property <c>Id</c> represents the Book's ID in the library and it's key in the database.
@@ -40,7 +44,7 @@ namespace Library_Models
         public ushort Year { get; set; }
         /// <value>
         /// Property <c>Place</c> can describe where the book can be found inside the library.
-        /// The description can be 50 caracters at max. Not required but recommended.
+        /// The description can be 50 caracters at max. Not required!
         /// </value>
         [MaxLength(50)]
         public string Place { get; set; }
@@ -52,10 +56,10 @@ namespace Library_Models
         /// </value>
         public DateTime? BorrowedAt { get; set; }
         /// <value>
-        /// Property <c>Borrower</c> contains who borrowed the book.
+        /// Property <c>BorrowerId</c> contains the borrower's ID.
         /// It's value is null if it is not borrowed at the moment.
         /// </value>
-        public Person Borrower { get; set; }
+        public long? BorrowerId { get; set; }
         /// <value>
         /// Property <c>ReturnUntil</c> contains the expiration date of the borrowing.
         /// It's value is null if it is not borrowed at the moment.
