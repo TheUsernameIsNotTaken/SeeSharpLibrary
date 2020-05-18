@@ -3,31 +3,76 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Library_Models
 {
+    /// <summary>
+    /// Class <c>Book</c> models a book owned by the library.
+    /// </summary>
+    /// <remarks>
+    /// The class is created to store these data with EF Core.
+    /// </remarks>
     public class Book
     {
-        //Book data properties
+        // Book data properties:
+        /// <value>
+        /// Property <c>Id</c> represents the Book's ID in the library and it's key in the database.
+        /// </value>
         [Key]
         public long Id { get; set; }
+        /// <value>
+        /// Property <c>Code</c> represents the Book's ISBN or other type of identifier.
+        /// It can be 20 caracters at max. It is required in every modell.
+        /// </value>
         [Required]
         [MaxLength(20)]
         public string Code { get; set; }
+        /// <value>
+        /// Property <c>Auther</c> represents the Book's Author. It is required in every modell.
+        /// </value>
         [Required]
         public string Author { get; set; }
+        /// <value>
+        /// Property <c>Title</c> represents the Book's Title. It is required in every modell.
+        /// </value>
         [Required]
         public string Title { get; set; }
+        /// <value>
+        /// Property <c>Year</c> represents the year when the book got published.
+        /// </value>
         public ushort Year { get; set; }
+        /// <value>
+        /// Property <c>Place</c> can describe where the book can be found inside the library.
+        /// The description can be 50 caracters at max. Not required but recommended.
+        /// </value>
+        [MaxLength(50)]
+        public string Place { get; set; }
+
         //Book status properties
-        [Required]
-        public bool Borrowed { get; set; }
-        [MaxLength(30)]
-        public string BorrowerFirstName { get; set; }
-        [MaxLength(30)]
-        public string BorrowerLastName { get; set; }
+        /// <value>
+        /// Property <c>BorrowedAt</c> contains the date when the book was borrowed.
+        /// It's value is null if it is not borrowed at the moment.
+        /// </value>
+        public DateTime? BorrowedAt { get; set; }
+        /// <value>
+        /// Property <c>Borrower</c> contains who borrowed the book.
+        /// It's value is null if it is not borrowed at the moment.
+        /// </value>
+        public Person Borrower { get; set; }
+        /// <value>
+        /// Property <c>ReturnUntil</c> contains the expiration date of the borrowing.
+        /// It's value is null if it is not borrowed at the moment.
+        /// </value>
         public DateTime? ReturnUntil { get; set; }
 
+        /// <summary>Reports the Book's data as a string.</summary>
+        /// <returns>
+        /// The Book's author, title and code in a string in the following form:
+        /// <c>Author: Title(Code)</c>
+        ///     <example>
+        ///     Jack Whyte: The Skystone(978-963-426-205-3)
+        ///     </example>
+        /// </returns>
         public override string ToString()
         {
-            return $"{Code}-{Title}({Year})";
+            return $"{Author}: {Title}({Code})";
         }
     }
 }

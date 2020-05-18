@@ -30,21 +30,20 @@ namespace WebAPI_Server.Migrations.Book
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Borrowed")
-                        .HasColumnType("bit");
+                    b.Property<DateTime?>("BorrowedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("BorrowerFirstName")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("BorrowerLastName")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                    b.Property<long?>("BorrowerId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
+
+                    b.Property<string>("Place")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime?>("ReturnUntil")
                         .HasColumnType("datetime2");
@@ -58,7 +57,41 @@ namespace WebAPI_Server.Migrations.Book
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BorrowerId");
+
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("Library_Models.Person", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("Library_Models.Book", b =>
+                {
+                    b.HasOne("Library_Models.Person", "Borrower")
+                        .WithMany("BorrowedBooks")
+                        .HasForeignKey("BorrowerId");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI_Server.Repositories;
 
-namespace WebAPI_Server.Migrations
+namespace WebAPI_Server.Migrations.Book
 {
-    [DbContext(typeof(PersonContext))]
-    partial class PersonContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(BookContext))]
+    [Migration("20200518085455_BookRefactorOneToMany")]
+    partial class BookRefactorOneToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace WebAPI_Server.Migrations
 
                     b.HasIndex("BorrowerId");
 
-                    b.ToTable("Book");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("Library_Models.Person", b =>
@@ -84,7 +86,7 @@ namespace WebAPI_Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("People");
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("Library_Models.Book", b =>
