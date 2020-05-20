@@ -29,12 +29,14 @@ namespace Library_Models
         [MaxLength(20)]
         public string Code { get; set; }
         /// <value>
-        /// Property <c>Auther</c> represents the Book's Author. It is required in every modell.
+        /// Property <c>Auther</c> represents the Book's Author.
+        /// It is required in every modell.
         /// </value>
         [Required]
         public string Author { get; set; }
         /// <value>
-        /// Property <c>Title</c> represents the Book's Title. It is required in every modell.
+        /// Property <c>Title</c> represents the Book's Title.
+        /// It is required in every modell.
         /// </value>
         [Required]
         public string Title { get; set; }
@@ -42,19 +44,14 @@ namespace Library_Models
         /// Property <c>Year</c> represents the year when the book got published.
         /// </value>
         public ushort Year { get; set; }
-        /// <value>
-        /// Property <c>Place</c> can describe where the book can be found inside the library.
-        /// The description can be 50 caracters at max. Not required!
-        /// </value>
-        [MaxLength(50)]
-        public string Place { get; set; }
 
         //Book status properties
         /// <value>
-        /// Property <c>BorrowedAt</c> contains the date when the book was borrowed.
-        /// It's value is null if it is not borrowed at the moment.
+        /// Property <c>IsAvailable</c> contains if the book is borrowed or not.
+        /// It is required in every modell.
         /// </value>
-        public DateTime? BorrowedAt { get; set; }
+        [Required]
+        public bool IsAvailable { get; set; }
         /// <value>
         /// Property <c>BorrowerId</c> contains the borrower's ID.
         /// It's value is null if it is not borrowed at the moment.

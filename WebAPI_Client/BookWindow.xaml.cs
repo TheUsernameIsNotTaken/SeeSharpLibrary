@@ -36,7 +36,6 @@ namespace WebAPI_Client
                 TitleTextBox.Text = _book.Title;
                 CodeTextBox.Text = _book.Code;
                 YearPicker.SelectedDate = new DateTime(_book.Year, 1, 1);
-                PlaceTextBox.Text = _book.Place;
                 CreateButton.Visibility = Visibility.Collapsed;
             }
             else
@@ -56,7 +55,7 @@ namespace WebAPI_Client
                 _book.Title = TitleTextBox.Text;
                 _book.Code = CodeTextBox.Text;
                 _book.Year = Convert.ToUInt16(YearPicker.SelectedDate.Value.Year);
-                _book.Place = PlaceTextBox.Text;
+                _book.IsAvailable = true;
 
                 BookDataProvider.CreateBook(_book);
 
@@ -73,9 +72,8 @@ namespace WebAPI_Client
                 _book.Title = TitleTextBox.Text;
                 _book.Code = CodeTextBox.Text;
                 _book.Year = Convert.ToUInt16(YearPicker.SelectedDate.Value.Year);
-                _book.Place = PlaceTextBox.Text;
 
-                BookDataProvider.CreateBook(_book);
+                BookDataProvider.UpdateBook(_book);
 
                 DialogResult = true;
                 Close();

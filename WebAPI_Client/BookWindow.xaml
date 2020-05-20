@@ -22,7 +22,6 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0" Content="Író" Margin="10"/>
@@ -36,9 +35,6 @@
 
             <Label Grid.Column="0" Grid.Row="3" Content="Kiadás éve" Margin="10"/>
             <DatePicker Grid.Column="1" Grid.Row="3" x:Name="YearPicker" Margin="10"/>
-
-            <Label Grid.Column="0" Grid.Row="4" Content="Hol található?" Margin="10"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Height="35" MaxLength="50" x:Name="PlaceTextBox" Margin="10"/>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom">

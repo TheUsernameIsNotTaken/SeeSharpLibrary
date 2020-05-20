@@ -29,9 +29,10 @@ namespace WebAPI_Client
         public BookPickerWindow(Person person)
         {
             InitializeComponent();
-            
+
             _selectedPerson = person;
             CodeTextBox.Text = _selectedPerson.ToString();
+
             UpdateBooks();
         }
 
@@ -65,18 +66,18 @@ namespace WebAPI_Client
                     UpdateBooks();
                 }
             }
-            BooksListBox.UnselectAll();
+            BooksDataGrid.UnselectAll();
         }
 
-        private void BooksListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BooksDataGrid_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            _selectedBook = BooksListBox.SelectedItem as Book;
+            _selectedBook = BooksDataGrid.SelectedItem as Book;
         }
 
         private void UpdateBooks()
         {
             _books = BookDataProvider.GetBooks();
-            BooksListBox.ItemsSource = _books;
+            BooksDataGrid.ItemsSource = _books;
             _selectedBook = null;
         }
     }

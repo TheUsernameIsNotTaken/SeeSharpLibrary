@@ -81,9 +81,9 @@ namespace WebAPI_Client.DataProviders
 
         public static void BorrowedBy(Book book, Person person)
         {
+            book.IsAvailable = false;
             book.BorrowerId = person.Id;
-            book.BorrowedAt = DateTime.Now;
-            book.ReturnUntil = book.BorrowedAt.Value.AddDays(Book.BORROWINGWEEKS * 7) ;
+            book.ReturnUntil = DateTime.Now.AddDays(Book.BORROWINGWEEKS * 7) ;
             UpdateBook(book);
         }
 

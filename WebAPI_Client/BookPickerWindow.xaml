@@ -15,7 +15,7 @@
 
         <Label Grid.Row="0" Content="Könyvek" Margin="15" FontWeight="Bold"/>
 
-        <ListBox Grid.Row="1" x:Name="BooksListBox" Margin="15, 0, 15, 15" SelectionMode="Single" SelectionChanged="BooksListBox_SelectionChanged"/>
+        <DataGrid Grid.Row="1" x:Name="BooksDataGrid" Margin="10, 10, 20, 10" SelectionMode="Single" SelectionChanged="BooksDataGrid_SelectionChanged"/>
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
