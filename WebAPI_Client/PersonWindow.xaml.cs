@@ -11,10 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WebAPI_Client.DataProviders;
+using Admin_Client.DataProviders;
 using Library_Models;
 
-namespace WebAPI_Client
+namespace Admin_Client
 {
     /// <summary>
     /// Interaction logic for PersonWindow.xaml

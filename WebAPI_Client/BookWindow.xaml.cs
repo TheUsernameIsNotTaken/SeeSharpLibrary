@@ -12,9 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WebAPI_Client.DataProviders;
+using Admin_Client.DataProviders;
 
-namespace WebAPI_Client
+namespace Admin_Client
 {
     /// <summary>
     /// Interaction logic for BookWindow.xaml

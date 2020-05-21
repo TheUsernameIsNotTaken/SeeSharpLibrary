@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebAPI_Client.Properties
+namespace Admin_Client.Properties
 {
 
 

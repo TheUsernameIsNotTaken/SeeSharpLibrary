@@ -5,7 +5,7 @@ using System.Text;
 using Library_Models;
 using Newtonsoft.Json;
 
-namespace WebAPI_Client.DataProviders
+namespace Admin_Client.DataProviders
 {
     public static class BookDataProvider
     {
