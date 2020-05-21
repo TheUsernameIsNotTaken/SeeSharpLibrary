@@ -37,6 +37,15 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        public static IList<Book> SearchBookByCode(string code)
+        {
+            using (var database = new BookContext())
+            {
+                var books = database.Books.Where(b => b.Code.Contains(code)).ToList();
+                return books;
+            }
+        }
+
         public static void AddBooks(IList<Book> books)
         {
             using (var database = new BookContext())

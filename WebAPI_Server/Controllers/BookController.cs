@@ -50,6 +50,21 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        [HttpGet("search/{code}")]
+        public ActionResult<IEnumerable<Book>> Search(string code)
+        {
+            var books = BookRepository.SearchBookByCode(code);
+            //Check successs
+            if (books != null)
+            {
+                return Ok(books);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost]
         public ActionResult Post(Book book)
         {

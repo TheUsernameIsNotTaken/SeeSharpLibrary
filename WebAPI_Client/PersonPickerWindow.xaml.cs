@@ -20,12 +20,12 @@ namespace Admin_Client
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PersonPickerWindow : Window
     {
         private IList<Person> _people;
         private Person _selectedPerson;
 
-        public MainWindow()
+        public PersonPickerWindow()
         {
             InitializeComponent();
 
@@ -36,12 +36,12 @@ namespace Admin_Client
         {
             if (_selectedPerson != null)
             {
-                var window = new BookPickerWindow(_selectedPerson);
-                if (window.ShowDialog() ?? false)
-                {
-                    UpdatePeople();
-                }
-                PeopleListBox.UnselectAll();
+                //var window = new BookPickerWindow();
+                //if (window.ShowDialog() ?? false)
+                //{
+                //    UpdatePeople();
+                //}
+                //PeopleListBox.UnselectAll();
             }
             else
             {

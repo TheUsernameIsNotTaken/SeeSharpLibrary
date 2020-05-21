@@ -49,6 +49,25 @@ namespace Admin_Client.DataProviders
             }
         }
 
+        public static IList<Book> SearchBooks(string code)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.GetAsync(_url+ "/search/" + code).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var rawData = response.Content.ReadAsStringAsync().Result;
+                    var books = JsonConvert.DeserializeObject<IList<Book>>(rawData);
+                    return books;
+                }
+                else
+                {
+                    throw new InvalidOperationException(response.StatusCode.ToString());
+                }
+            }
+        }
+
         public static void CreateBook(Book book)
         {
             using (var client = new HttpClient())

@@ -11,6 +11,33 @@ namespace Admin_Client.DataProviders
     {
         private static string _url = "http://localhost:5000/api/person";
 
+        public static Person GetPerson(long? id)
+        {
+            if(id != null)
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(_url + "/" + id).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var rawData = response.Content.ReadAsStringAsync().Result;
+                        var people = JsonConvert.DeserializeObject<Person>(rawData);
+                        return people;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(response.StatusCode.ToString());
+                    }
+                }
+            }
+            else
+            {
+                throw new NullReferenceException("Cannot get person with null ID.");
+            }
+
+        }
+
         public static IList<Person> GetPeople()
         {
             using (var client = new HttpClient())
