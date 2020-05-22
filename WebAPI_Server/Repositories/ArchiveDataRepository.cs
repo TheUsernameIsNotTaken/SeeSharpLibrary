@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Library_Models;
 
 namespace WebAPI_Server.Repositories
 {
     public static class ArchiveDataRepository
     {
-        public static IList<ArchiveData> GetPeople()
+        //Get all archived data.
+        public static IList<ArchiveData> GetAll()
         {
             using(var database = new ArchiveDataContext())
             {
@@ -19,26 +16,18 @@ namespace WebAPI_Server.Repositories
             }
         }
 
-        //DataBase: Get a specific person
-        public static Person GetPerson(long id)
+        //Get a specific data.
+        public static ArchiveData GetSingle(long id)
         {
             using (var database = new ArchiveDataContext())
             {
-                var person = database.People.Where(p => p.Id == id).FirstOrDefault();
-                return person;
+                var data = database.Archive.Where(a => a.Id == id).FirstOrDefault();
+                return data;
             }
         }
 
-        public static void AddPeople(IList<ArchiveData> moreData)
-        {
-            foreach(var data in moreData)
-            {
-                AddPerson(data);
-            }
-        }
-
-        //DataBase:
-        public static void AddPerson(ArchiveData data)
+        //Add a single archived data.
+        public static void AddData(ArchiveData data)
         {
             using (var database = new ArchiveDataContext())
             {
@@ -47,7 +36,8 @@ namespace WebAPI_Server.Repositories
             }
         }
 
-        public static void UpdatePerson(ArchiveData data)
+        //Update a single archived data when adding the return date and if needed.
+        public static void UpdateData(ArchiveData data)
         {
             using (var database = new ArchiveDataContext())
             {
@@ -56,7 +46,8 @@ namespace WebAPI_Server.Repositories
             }
         }
 
-        public static void  DeletePerson(ArchiveData data)
+        //Delete a single archived data from the database.
+        public static void  DeleteData(ArchiveData data)
         {
             using (var database = new ArchiveDataContext())
             {

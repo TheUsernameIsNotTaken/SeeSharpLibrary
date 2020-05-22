@@ -1,31 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Library_Models;
 
 namespace WebAPI_Server.Repositories
 {
     public static class PersonRepository
     {
+        //Get all person
         public static IList<Person> GetPeople()
         {
-            /* //JSON:
-            var appDataPath = GetAppDataPath();
-
-            if (File.Exists(appDataPath))
-            {
-                var rawContent = File.ReadAllText(appDataPath);
-                var people = JsonSerializer.Deserialize<IList<Person>>(rawContent);
-                return people;
-            }
-
-            return new List<Person>();
-            */
-
-            //DataBase:
             using(var database = new PersonContext())
             {
                 var people = database.People.ToList();
@@ -33,7 +16,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
-        //DataBase: Get a specific person
+        //Get a specific person
         public static Person GetPerson(long id)
         {
             using (var database = new PersonContext())
@@ -43,23 +26,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
-        public static void AddPeople(IList<Person> people)
-        {
-            /* //JSON:
-            var appDataPath = GetAppDataPath();
-
-            var rawContent = JsonSerializer.Serialize(people);
-            File.WriteAllText(appDataPath, rawContent);
-            */
-
-            //DataBase:
-            foreach(var person in people)
-            {
-                AddPerson(person);
-            }
-        }
-
-        //DataBase:
+        //Add a single person's data.
         public static void AddPerson(Person person)
         {
             using (var database = new PersonContext())
@@ -69,6 +36,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Update a single person's data.
         public static void UpdatePerson(Person person)
         {
             using (var database = new PersonContext())
@@ -78,6 +46,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Delete a single person's data from the database.
         public static void  DeletePerson(Person person)
         {
             using (var database = new PersonContext())

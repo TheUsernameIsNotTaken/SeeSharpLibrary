@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Library_Models;
 using WebAPI_Server.Repositories;
@@ -13,17 +9,19 @@ namespace WebAPI_Server.Controllers
     [ApiController]
     public class ArchiveDataController : ControllerBase
     {
+        //Send all archived data.
         [HttpGet]
         public ActionResult<IEnumerable<ArchiveData>> Get()
         {
-            var allData = ArchiveDataRepository.GetPeople();
+            var allData = ArchiveDataRepository.GetAll();
             return Ok(allData);
         }
 
+        //Send a specific archived data.
         [HttpGet("{id}")]
         public ActionResult<ArchiveData> Get(long id)
         {
-            var data = ArchiveDataRepository.GetPerson(id);
+            var data = ArchiveDataRepository.GetSingle(id);
             //Check successs
             if (data != null)
             {
@@ -35,33 +33,36 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        //Receive and store a single archived data.
         [HttpPost]
         public ActionResult Post(ArchiveData data)
         {
-            ArchiveDataRepository.AddPerson(data);
+            ArchiveDataRepository.AddData(data);
 
             return Ok();
         }
 
+        //Receive and update a single archived data.
         [HttpPut("{id}")]
         public ActionResult Put(ArchiveData person, long id)
         {
-            var dbPerson = ArchiveDataRepository.GetPerson(id);
+            var dbPerson = ArchiveDataRepository.GetSingle(id);
             //Update if it exist
             if (dbPerson != null) {
-                ArchiveDataRepository.UpdatePerson(person);
+                ArchiveDataRepository.UpdateData(person);
                 return Ok();
             }
             return NotFound();
         }
 
+        //Delete a single archived data from the server
         [HttpDelete("{id}")]
         public ActionResult Delete(long id)
         {
-            var person = PersonRepository.GetPerson(id);
+            var person = ArchiveDataRepository.GetSingle(id);
             if (person != null)
             {
-                ArchiveDataRepository.DeletePerson(person);
+                ArchiveDataRepository.DeleteData(person);
                 return Ok();
             }
             return NotFound();

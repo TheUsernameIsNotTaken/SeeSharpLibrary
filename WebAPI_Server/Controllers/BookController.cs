@@ -13,6 +13,7 @@ namespace WebAPI_Server.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+        //Send all book's data.
         [HttpGet]
         public ActionResult<IEnumerable<Book>> Get()
         {
@@ -20,6 +21,7 @@ namespace WebAPI_Server.Controllers
             return Ok(books);
         }
 
+        //Send a specific book's data by it's id.
         [HttpGet("{id}")]
         public ActionResult<Book> Get(long id)
         {
@@ -35,6 +37,7 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        //Get a single book's data by it's code.
         [HttpGet("{code}")]
         public ActionResult<Book> Get(string code)
         {
@@ -50,6 +53,7 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        //Search books by it's code.
         [HttpGet("search/{code}")]
         public ActionResult<IEnumerable<Book>> Search(string code)
         {
@@ -65,6 +69,7 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        //Receive and store a single book's data.
         [HttpPost]
         public ActionResult Post(Book book)
         {
@@ -73,6 +78,7 @@ namespace WebAPI_Server.Controllers
             return Ok();
         }
 
+        //Receive and update a single book's data.
         [HttpPut("{id}")]
         public ActionResult Put(Book book, long id)
         {
@@ -85,6 +91,7 @@ namespace WebAPI_Server.Controllers
             return NotFound();
         }
 
+        //Delete a single book's data from the server
         [HttpDelete("{id}")]
         public ActionResult Delete(long id)
         {

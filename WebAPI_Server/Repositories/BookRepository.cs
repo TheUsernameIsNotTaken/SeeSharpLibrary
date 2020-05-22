@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Library_Models;
 
 namespace WebAPI_Server.Repositories
 {
     public static class BookRepository
     {
+        //Get all book's data.
         public static IList<Book> GetBooks()
         {
             using(var database = new BookContext())
@@ -19,6 +16,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Get a specific book's data.
         public static Book GetBook(long id)
         {
             using (var database = new BookContext())
@@ -28,6 +26,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Get a single book's data by
         public static Book GetBookByCode(string code)
         {
             using (var database = new BookContext())
@@ -37,6 +36,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Get a list of books' data by the part oh their code
         public static IList<Book> SearchBookByCode(string code)
         {
             using (var database = new BookContext())
@@ -46,15 +46,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
-        public static void AddBooks(IList<Book> books)
-        {
-            foreach(var book in books)
-            {
-                AddBook(book);
-            }
-        }
-
-        //DataBase:
+        //Add a single book's data.
         public static void AddBook(Book book)
         {
             using (var database = new BookContext())
@@ -64,6 +56,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Update a single book's data.
         public static void UpdateBook(Book book)
         {
             using (var database = new BookContext())
@@ -73,6 +66,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Delete a single book's data from the database.
         public static void  DeleteBook(Book book)
         {
             using (var database = new BookContext())
