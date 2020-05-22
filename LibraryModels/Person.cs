@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Library_Models
@@ -19,24 +18,25 @@ namespace Library_Models
         public long Id { get; set; }
         /// <value>
         /// Property <c>FirstName</c> represents the Person's first name.
-        /// It can be 30 caracters at max.
+        /// It can be 40 caracters at max.
         /// It is required in every modell.
         /// </value>
         [Required]
-        [MaxLength(30)]
+        [MaxLength(40)]
         public string FirstName { get; set; }
         /// <value>
         /// Property <c>LastName</c> represents the Person's last name.
-        /// It can be 30 caracters at max.
+        /// It can be 40 caracters at max.
         /// It is required in every modell.
         /// </value>
         [Required]
-        [MaxLength(30)]
+        [MaxLength(40)]
         public string LastName { get; set; }
         /// <value>
         /// Property <c>DateOfBirth</c> contains the Person's date of birth.
         /// It is required in every modell.
         /// </value>
+        [Required]
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>Reports the Person's data as a string.</summary>

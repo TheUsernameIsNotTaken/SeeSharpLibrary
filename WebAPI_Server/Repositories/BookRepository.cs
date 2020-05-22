@@ -48,12 +48,9 @@ namespace WebAPI_Server.Repositories
 
         public static void AddBooks(IList<Book> books)
         {
-            using (var database = new BookContext())
+            foreach(var book in books)
             {
-                foreach(var book in books)
-                {
-                    AddBook(book);
-                }
+                AddBook(book);
             }
         }
 

@@ -22,7 +22,7 @@ namespace Library_Models
         [Key]
         public long Id { get; set; }
         /// <value>
-        /// Property <c>Code</c> represents the Book's ISBN or other type of identifier.
+        /// Property <c>Code</c> represents the Book's ISBN or other type of identifier code.
         /// It can be 20 caracters at max. It is required in every modell.
         /// </value>
         [Required]

@@ -53,12 +53,9 @@ namespace WebAPI_Server.Repositories
             */
 
             //DataBase:
-            using (var database = new PersonContext())
+            foreach(var person in people)
             {
-                foreach(var person in people)
-                {
-                    AddPerson(person);
-                }
+                AddPerson(person);
             }
         }
 
