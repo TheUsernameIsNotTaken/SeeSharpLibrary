@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\Person\20200523140354_TestIfNeeded.cs" />
     <Compile Remove="Migrations\Person\20200523140354_TestIfNeeded.Designer.cs" />
+    <Compile Remove="Migrations\Person\20200523155642_AddedExtendTime.cs" />
+    <Compile Remove="Migrations\Person\20200523155642_AddedExtendTime.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
