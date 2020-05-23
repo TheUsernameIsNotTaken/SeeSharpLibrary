@@ -89,7 +89,7 @@ namespace Admin_Client
 
         private void UpdatePeople()
         {
-            _people = PersonDataProvider.GetPeople();
+            _people = LibraryDataProvider.GetAllData<Person>(LibraryDataProvider.personUrl);
             PeopleListBox.ItemsSource = _people;
             _selectedPerson = null;
         }

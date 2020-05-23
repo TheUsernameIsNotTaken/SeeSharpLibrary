@@ -54,7 +54,7 @@ namespace Admin_Client
                 _person.LastName = LastNameTextBox.Text;
                 _person.DateOfBirth = DateOfBirthDatePicker.SelectedDate.Value;
 
-                PersonDataProvider.CreatePerson(_person);
+                LibraryDataProvider.CreateData(LibraryDataProvider.personUrl, _person);
 
                 DialogResult = true;
                 Close();
@@ -69,7 +69,7 @@ namespace Admin_Client
                 _person.LastName = LastNameTextBox.Text;
                 _person.DateOfBirth = DateOfBirthDatePicker.SelectedDate.Value;
 
-                PersonDataProvider.UpdatePerson(_person);
+                LibraryDataProvider.UpdateData<Person>(LibraryDataProvider.personUrl, _person, _person.Id);
 
                 DialogResult = true;
                 Close();
@@ -80,7 +80,7 @@ namespace Admin_Client
         {
             if (MessageBox.Show("Do you really want to delete?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                PersonDataProvider.DeletePerson(_person.Id);
+                LibraryDataProvider.DeleteData<Person>(LibraryDataProvider.personUrl, _person.Id);
 
                 DialogResult = true;
                 Close();

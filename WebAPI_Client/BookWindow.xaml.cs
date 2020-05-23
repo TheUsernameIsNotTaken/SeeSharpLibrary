@@ -57,7 +57,7 @@ namespace Admin_Client
                 _book.Year = Convert.ToUInt16(YearPicker.SelectedDate.Value.Year);
                 _book.IsAvailable = true;
 
-                BookDataProvider.CreateBook(_book);
+                LibraryDataProvider.CreateData<Book>(LibraryDataProvider.bookUrl, _book);
 
                 DialogResult = true;
                 Close();
@@ -73,7 +73,7 @@ namespace Admin_Client
                 _book.Code = CodeTextBox.Text;
                 _book.Year = Convert.ToUInt16(YearPicker.SelectedDate.Value.Year);
 
-                BookDataProvider.UpdateBook(_book);
+                LibraryDataProvider.UpdateData<Book>(LibraryDataProvider.bookUrl, _book, _book.Id);
 
                 DialogResult = true;
                 Close();
@@ -84,7 +84,7 @@ namespace Admin_Client
         {
             if (MessageBox.Show("Do you really want to delete?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                BookDataProvider.DeleteBook(_book.Id);
+                LibraryDataProvider.DeleteData<Book>(LibraryDataProvider.bookUrl, _book.Id);
 
                 DialogResult = true;
                 Close();

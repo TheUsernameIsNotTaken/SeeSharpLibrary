@@ -152,8 +152,8 @@
     <Compile Include="BookWindow.xaml.cs">
       <DependentUpon>BookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataProviders\LibraryDataProvider.cs" />
     <Compile Include="DataProviders\BookDataProvider.cs" />
-    <Compile Include="DataProviders\PersonDataProvider.cs" />
     <Compile Include="PersonPickerWindow.xaml.cs">
       <DependentUpon>PersonPickerWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

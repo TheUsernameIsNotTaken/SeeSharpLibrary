@@ -25,6 +25,7 @@ namespace Admin_Client
         private IList<Book> _books;
         private Book _selectedBook;
         private Person _borrower;
+        private Person _selectedPerson;
 
         public BookPickerWindow()
         {
@@ -34,6 +35,26 @@ namespace Admin_Client
             _searced = false;
             _borrower = null;
             _selectedBook = null;
+            _selectedPerson = null;
+
+            //Hide the Borrow button
+            BorrowBookButton.Visibility = Visibility.Collapsed;
+
+            UpdateBooks();
+        }
+
+        public BookPickerWindow(Person person)
+        {
+            InitializeComponent();
+
+            //Get default data for private variables
+            _searced = false;
+            _borrower = null;
+            _selectedBook = null;
+            _selectedPerson = person;
+
+            //Hide the Reader Picker button
+            PickReaderButton.Visibility = Visibility.Collapsed;
 
             UpdateBooks();
         }
@@ -89,7 +110,7 @@ namespace Admin_Client
             bool borrowed = _selectedBook != null && !_selectedBook.IsAvailable;
             
             //Borrower Update
-            _borrower = borrowed ? PersonDataProvider.GetPerson(_selectedBook.BorrowerId) : null;
+            _borrower = borrowed ? LibraryDataProvider.GetSingleData<Person>(LibraryDataProvider.personUrl, _selectedBook.BorrowerId.Value) : null;
             //View update
             LastNameTextBox.Text = borrowed ? _borrower.LastName : string.Empty;
             FirstNameTextBox.Text = borrowed ? _borrower.FirstName : string.Empty;
@@ -112,7 +133,7 @@ namespace Admin_Client
 
         private void UpdateBooks()
         {
-            _books = _searced ? BookDataProvider.SearchBooks(CodeTextBox.Text) : BookDataProvider.GetBooks();
+            _books = _searced ? BookDataProvider.SearchBooks(CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
             BooksDataGrid.ItemsSource = _books;
             _selectedBook = null;
         }

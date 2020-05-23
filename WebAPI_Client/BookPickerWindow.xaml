@@ -79,6 +79,8 @@
 
             <Button Grid.Column="3" x:Name="BorrowBookButton" Content="Könyv kölcsönzése" Width="100" HorizontalAlignment="Left" Margin="10" Click="BorrowBookButton_Click"/>
 
+            <Button Grid.Column="3" x:Name="PickReaderButton" Content="Olvasó kiválasztása" Width="100" HorizontalAlignment="Left" Margin="10" Click="PickReaderButton_Click"/>
+
             <Button Grid.Column="4" x:Name="AddOrUpdateBookButton" Content="Könyv hozzáadása vagy frissítése" Width="180" HorizontalAlignment="Right" Margin="10" Click="AddOrUpdateBookButton_Click"/>
 
         </Grid>
