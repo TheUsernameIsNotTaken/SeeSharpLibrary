@@ -68,8 +68,10 @@ namespace Admin_Client
         //Borrow a book to the picked person
         private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
         {
+            //Borrowable only if not null
             if(_selectedBook != null && _selectedPerson != null)
             {
+                //Borrowable only if available
                 if(_selectedBook.IsAvailable)
                 {
                     BookDataProvider.BorrowBook(_selectedBook, _selectedPerson);
@@ -80,6 +82,7 @@ namespace Admin_Client
                                             MessageBoxIcon.Asterisk);
                     UpdateBooks();
                 }
+                //Error if already borrowed
                 else
                 {
                     MessageBox.Show("A választott könyv jelenleg ki van kölcsönözve, legkésőbb az alábbi időpontig: " + _selectedBook.ReturnUntil.ToString() + "!",
@@ -90,11 +93,13 @@ namespace Admin_Client
             }
             else
             {
-                MessageBox.Show("Kérem válassza ki, hogy melyik könyvet kölcsönzi ki az olvasó!",
-                                        "Könyv nem található!",
+                MessageBox.Show("Kérem válassza ki, hogy melyik könyvet kölcsönzi ki melyik olvasó!",
+                                        "Könyv vagy olvasó nem található!",
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Exclamation);
             }
+            //Archivate the borrowing data.
+            //TODO
         }
 
         //Return a book
@@ -132,7 +137,8 @@ namespace Admin_Client
                     UpdateBooks();
                     break;
             }
-
+            //Update the archivated borrowing data.
+            //TODO
         }
 
         // Add/Update/Delete books
@@ -154,7 +160,6 @@ namespace Admin_Client
                     UpdateBooks();
                 }
             }
-            BooksDataGrid.UnselectAll();
         }
 
         //Update Picked Book and Borrower data
@@ -241,7 +246,7 @@ namespace Admin_Client
             _books = _searced ? LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/search/", CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
             BooksDataGrid.ItemsSource = _books;
             //No chosen item
-            BooksDataGrid.SelectedItem = null;
+            BooksDataGrid.UnselectAll();
             _selectedBook = null;
             SetBorrowerVisibility(false);
         }
