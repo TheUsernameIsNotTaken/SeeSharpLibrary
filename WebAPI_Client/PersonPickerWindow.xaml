@@ -24,9 +24,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Name="BorrowBookButton" Content="Könyv kölcsönzése" Width="200" HorizontalAlignment="Left" Margin="15" Click="BorrowBookButton_Click"/>
-
-            <Button Grid.Column="1" x:Name="AddBookButton" HorizontalAlignment="Center" Content="Könyv hozzáadása" Width="100" Margin="15" Click="AddBookButton_Click"/>
+            <Button Grid.Column="0" x:Name="BorrowBookButton" Content="Könyvkölcsönzések felvétele" Width="200" HorizontalAlignment="Left" Margin="15" Click="BorrowBookButton_Click"/>
 
             <Button Grid.Column="2" x:Name="AddPersonButton" Content="Felhasználó hozzáadása vagy frissítése" Width="200" HorizontalAlignment="Right" Margin="15" Click="AddPersonButton_Click" RenderTransformOrigin="0.5,0.511"/>
 

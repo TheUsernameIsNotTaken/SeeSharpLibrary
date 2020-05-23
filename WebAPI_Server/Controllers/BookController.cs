@@ -23,7 +23,7 @@ namespace WebAPI_Server.Controllers
 
         //Send a specific book's data by it's id.
         [HttpGet("{id}")]
-        public ActionResult<Book> Get(long id)
+        public ActionResult<Book> GetById(long id)
         {
             var book = BookRepository.GetBook(id);
             //Check successs
@@ -38,8 +38,8 @@ namespace WebAPI_Server.Controllers
         }
 
         //Get a single book's data by it's code.
-        [HttpGet("{code}")]
-        public ActionResult<Book> Get(string code)
+        [HttpGet("get/{code}")]
+        public ActionResult<Book> GetByCode(string code)
         {
             var book = BookRepository.GetBookByCode(code);
             //Check successs
@@ -55,7 +55,7 @@ namespace WebAPI_Server.Controllers
 
         //Search books by it's code.
         [HttpGet("search/{code}")]
-        public ActionResult<IEnumerable<Book>> Search(string code)
+        public ActionResult<IEnumerable<Book>> SearchByCode(string code)
         {
             var books = BookRepository.SearchBookByCode(code);
             //Check successs

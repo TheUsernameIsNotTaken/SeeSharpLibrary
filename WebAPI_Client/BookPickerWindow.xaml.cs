@@ -37,28 +37,14 @@ namespace Admin_Client
             _selectedBook = null;
             _selectedPerson = null;
 
-            //Hide the Borrow button
-            BorrowBookButton.Visibility = Visibility.Collapsed;
+            //Set the correct visibility settings
+            SetBorrowerVisibility(false);
+            SetUserVisibility();
 
             UpdateBooks();
         }
 
-        public BookPickerWindow(Person person)
-        {
-            InitializeComponent();
-
-            //Get default data for private variables
-            _searced = false;
-            _borrower = null;
-            _selectedBook = null;
-            _selectedPerson = person;
-
-            //Hide the Reader Picker button
-            PickReaderButton.Visibility = Visibility.Collapsed;
-
-            UpdateBooks();
-        }
-
+        //Update the books list with all of the database
         private void AllBookButton_Click(object sender, RoutedEventArgs e)
         {
             _searced = false;
@@ -72,10 +58,49 @@ namespace Admin_Client
             UpdateBooks();
         }
 
-        //Borrow a book to a Person
+        //Pick a person who will borrow books
+        private void PickReaderButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Get the borrower user's data, if chosen
+            var window = new PersonPickerWindow();
+            if (window.ShowDialog() ?? false)
+            {
+                _selectedPerson = window.selectedPerson;
+            }
+            else
+            {
+                _selectedPerson = null;
+            }
+            SetUserVisibility();
+        }
+
+        //Borrow a book to the picked person
         private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            if(_selectedBook != null && _selectedPerson != null)
+            {
+                if(_selectedBook.IsAvailable)
+                {
+                    BookDataProvider.BorrowBook(_selectedBook, _selectedPerson);
+                    var updatedBook = LibraryDataProvider.GetSingleData<Book>(LibraryDataProvider.bookUrl, _selectedBook.Id);
+                    MessageBox.Show("Az olvasó sikeresen kikölcsönözte a könyvet az alábbi időpontig: " + updatedBook.ReturnUntil.ToString() + "!",
+                                            "Sikeres kölcsönzés!",
+                                            MessageBoxButton.OK);
+                    UpdateBooks();
+                }
+                else
+                {
+                    MessageBox.Show("A választott könyv jelenleg ki van kölcsönözve, legkésőbb az alábbi időpontig: " + _selectedBook.ReturnUntil.ToString() + "!",
+                                            "Sikeres kölcsönzés!",
+                                            MessageBoxButton.OK);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kérem válassza ki, hogy melyik könyvet kölcsönzi ki az olvasó!",
+                                        "Könyv nem található!",
+                                        MessageBoxButton.OK);
+            }
         }
 
         // Add/Update/Delete books
@@ -111,26 +136,70 @@ namespace Admin_Client
             
             //Borrower Update
             _borrower = borrowed ? LibraryDataProvider.GetSingleData<Person>(LibraryDataProvider.personUrl, _selectedBook.BorrowerId.Value) : null;
-            //View update
-            LastNameTextBox.Text = borrowed ? _borrower.LastName : string.Empty;
-            FirstNameTextBox.Text = borrowed ? _borrower.FirstName : string.Empty;
-            if (borrowed)   DateOfBirthDatePicker.SelectedDate = _borrower.DateOfBirth;
-            else            DateOfBirthDatePicker.SelectedDate = null;
+            SetBorrowerVisibility(borrowed);
         }
 
         //Cancel date picking
         private void BOD_SelectedDatesChanged(object sender, RoutedEventArgs e)
         {
-            if(_borrower == null)
+            if(_borrower != null)
             {
-                DateOfBirthDatePicker.SelectedDate = null;
+                BorrowerDateOfBirthDatePicker.SelectedDate = _borrower.DateOfBirth;
+                BorrowerEndDatePicker.SelectedDate = _selectedBook.ReturnUntil;
             }
-            else
+            if(_selectedPerson != null)
             {
-                DateOfBirthDatePicker.SelectedDate = _borrower.DateOfBirth;
+                UserDateOfBirthDatePicker.SelectedDate = _selectedPerson.DateOfBirth;
             }
         }
 
+        //End the current borrower user's borrowing. Like a log-out.
+        private void ExitUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            _selectedPerson = null;
+            SetUserVisibility();
+        }
+
+        //Update the visibility parameters
+        private void SetBorrowerVisibility(bool isBookBorrowed)
+        {
+            //Set the Grid's visibility
+            BorrowerGrid.Visibility = isBookBorrowed ? Visibility.Visible : Visibility.Collapsed;
+            //View update
+            if (isBookBorrowed)
+            {
+                BorrowerLastNameTextBox.Text = _borrower.LastName;
+                BorrowerFirstNameTextBox.Text = _borrower.FirstName;
+                BorrowerDateOfBirthDatePicker.SelectedDate = _borrower.DateOfBirth;
+                BorrowerEndDatePicker.SelectedDate = _selectedBook.ReturnUntil;
+            }
+        }
+
+        private void SetUserVisibility()
+        {
+            if (_selectedPerson != null)
+            {
+                //View book borrowing interface 
+                PickedUserGrid.Visibility = Visibility.Visible;
+                BorrowBookButton.Visibility = Visibility.Visible;
+                //Hide borrow starting button
+                PickReaderButton.Visibility = Visibility.Collapsed;
+                //View the user's data
+                UserLastNameTextBox.Text = _selectedPerson.LastName;
+                UserFirstNameTextBox.Text = _selectedPerson.FirstName;
+                UserDateOfBirthDatePicker.SelectedDate = _selectedPerson.DateOfBirth;
+            }
+            else
+            {
+                //View borrow starting button
+                PickReaderButton.Visibility = Visibility.Visible;
+                //Hide book borrowing interface
+                PickedUserGrid.Visibility = Visibility.Collapsed;
+                BorrowBookButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        //Update the book list
         private void UpdateBooks()
         {
             _books = _searced ? BookDataProvider.SearchBooks(CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);

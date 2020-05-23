@@ -13,7 +13,7 @@ namespace Admin_Client.DataProviders
         public static string personUrl = "http://localhost:5000/api/person";
         public static string archiveUrl = "http://localhost:5000/api/archive";
 
-        //Get a single data inside a database from the server
+        //Get a single data inside a database from the server by it's ID.
         public static T GetSingleData<T>(string url, long id)
         {
             using (var client = new HttpClient())

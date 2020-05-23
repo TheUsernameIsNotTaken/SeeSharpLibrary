@@ -11,6 +11,26 @@ namespace Admin_Client.DataProviders
     {
         private static string _url = LibraryDataProvider.bookUrl;
 
+        //Get a single data inside a database from the server by it's code.
+        public static Book GetSingleData(string code)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.GetAsync(_url + "/get/" + code).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var rawData = response.Content.ReadAsStringAsync().Result;
+                    var singleData = JsonConvert.DeserializeObject<Book>(rawData);
+                    return singleData;
+                }
+                else
+                {
+                    throw new InvalidOperationException(response.StatusCode.ToString());
+                }
+            }
+        }
+
         //Borrow a book from the library as a person.
         public static void BorrowBook(Book book, Person person)
         {

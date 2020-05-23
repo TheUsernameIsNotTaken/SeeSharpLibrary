@@ -23,7 +23,8 @@ namespace Admin_Client
     public partial class PersonPickerWindow : Window
     {
         private IList<Person> _people;
-        private Person _selectedPerson;
+
+        public Person selectedPerson { get; private set; }
 
         public PersonPickerWindow()
         {
@@ -34,38 +35,24 @@ namespace Admin_Client
 
         private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_selectedPerson != null)
-            {
-                //var window = new BookPickerWindow();
-                //if (window.ShowDialog() ?? false)
-                //{
-                //    UpdatePeople();
-                //}
-                //PeopleListBox.UnselectAll();
-            }
-            else
+            if (selectedPerson == null)
             {
                 MessageBox.Show("Kölcsönzés előtt kérem válassza ki, hogy ki akar kölcsönözni!",
                                         "Kölcsönző nem található!",
                                         MessageBoxButton.OK);
             }
-        }
-
-        private void AddBookButton_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new BookWindow(null);
-            if (window.ShowDialog() ?? false)
+            else
             {
-                UpdatePeople();
+                DialogResult = true;
+                Close();
             }
-            PeopleListBox.UnselectAll();
         }
 
         private void AddPersonButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_selectedPerson != null)
+            if (selectedPerson != null)
             {
-                var window = new PersonWindow(_selectedPerson);
+                var window = new PersonWindow(selectedPerson);
                 if (window.ShowDialog() ?? false)
                 {
                     UpdatePeople();
@@ -84,14 +71,14 @@ namespace Admin_Client
 
         private void PeopleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _selectedPerson = PeopleListBox.SelectedItem as Person;
+            selectedPerson = PeopleListBox.SelectedItem as Person;
         }
 
         private void UpdatePeople()
         {
             _people = LibraryDataProvider.GetAllData<Person>(LibraryDataProvider.personUrl);
             PeopleListBox.ItemsSource = _people;
-            _selectedPerson = null;
+            selectedPerson = null;
         }
     }
 }
