@@ -98,7 +98,7 @@ namespace Admin_Client
         //Update the person list
         private void UpdatePeople()
         {
-            _people = _searched ? LibraryDataProvider.SearchData<Person>(LibraryDataProvider.personUrl, SearchPersonTextBox.Text) : LibraryDataProvider.GetAllData<Person>(LibraryDataProvider.personUrl);
+            _people = _searched ? LibraryDataProvider.SearchByStringData<Person>(LibraryDataProvider.personUrl + "/search/", SearchPersonTextBox.Text) : LibraryDataProvider.GetAllData<Person>(LibraryDataProvider.personUrl);
             PeopleListBox.ItemsSource = _people;
             _searched = false;
             SearchPersonTextBox.Text = string.Empty;

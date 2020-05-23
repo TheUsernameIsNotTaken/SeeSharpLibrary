@@ -103,6 +103,12 @@ namespace Admin_Client
             }
         }
 
+        //Return a book
+        private void ReturnBookButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         // Add/Update/Delete books
         private void AddOrUpdateBookButton_Click(object sender, RoutedEventArgs e)
         {
@@ -139,14 +145,20 @@ namespace Admin_Client
             SetBorrowerVisibility(borrowed);
         }
 
-        //End the current borrower user's borrowing. Like a log-out.
+        //Show only the books borrowed by user
+        private void ShowBorrowedButton_Click(object sender, RoutedEventArgs e)
+        {
+            BookDataProvider.SearchBooksByBorrower(_selectedPerson.Id);
+        }
+
+        //End the currently borrowing user's procces. Like a log-out.
         private void ExitUserButton_Click(object sender, RoutedEventArgs e)
         {
             _selectedPerson = null;
             SetUserVisibility();
         }
 
-        //Update the visibility parameters
+        //Update the borrower's visibility parameters
         private void SetBorrowerVisibility(bool isBookBorrowed)
         {
             //Set the Grid's visibility
@@ -161,6 +173,7 @@ namespace Admin_Client
             }
         }
 
+        //Update the borrowing procces's interface visibility
         private void SetUserVisibility()
         {
             if (_selectedPerson != null)
@@ -188,7 +201,7 @@ namespace Admin_Client
         //Update the book list
         private void UpdateBooks()
         {
-            _books = _searced ? LibraryDataProvider.SearchData<Book>(LibraryDataProvider.bookUrl, CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
+            _books = _searced ? LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/search/", CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
             BooksDataGrid.ItemsSource = _books;
             _selectedBook = null;
         }

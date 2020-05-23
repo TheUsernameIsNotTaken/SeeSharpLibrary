@@ -37,69 +37,92 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" x:Name="BorrowerGrid" VerticalAlignment="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    
-                    <Label Grid.Column="0" Grid.Row="0" Content="Kölcsönző adatai:" Margin="5" FontWeight="Bold" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Label Grid.Column="0" Grid.Row="0" Content="Kölcsönző adatai:" Margin="5" FontWeight="Bold" FontSize="12" />
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Vezetéknév" Margin="10"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" Focusable="False" MaxLength="30" x:Name="BorrowerLastNameTextBox" Margin="10"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Vezetéknév" Margin="10" FontSize="12"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Focusable="False" MaxLength="30" x:Name="BorrowerLastNameTextBox" Margin="10" FontSize="12"/>
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Keresztnév" Margin="10"/>
-                    <TextBox Grid.Column="1" Grid.Row="2" Focusable="False" MaxLength="30" x:Name="BorrowerFirstNameTextBox" Margin="10"/>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Keresztnév" Margin="10" FontSize="12"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Focusable="False" MaxLength="30" x:Name="BorrowerFirstNameTextBox" Margin="10" FontSize="12"/>
+                        
+                        <Label Grid.Column="0" Grid.Row="3" Content="Születési idő" Margin="10" FontSize="12"/>
+                        <TextBox Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="BorrowerDateOfBirthTextBox" Margin="10" FontSize="12" />
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Születési idő" Margin="10"/>
-                    <TextBox Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="BorrowerDateOfBirthTextBox" Margin="10" />
+                        <Label Grid.Column="0" Grid.Row="4" Content="Lejárati határidő" Margin="10" FontSize="12"/>
+                        <TextBox Grid.Column="1" Grid.Row="4" Focusable="False" x:Name="BorrowerEndTextBox" Margin="10" FontSize="12" />
+                        
+                    </Grid>
 
-                    <Label Grid.Column="0" Grid.Row="4" Content="Lejárati határidő" Margin="10"/>
-                    <TextBox Grid.Column="1" Grid.Row="4" Focusable="False" x:Name="BorrowerEndTextBox" Margin="10" />
+                    <Button Grid.Row="1" x:Name="ReturnBookButton" Content="Könyv leadása" Width="225" VerticalAlignment="Center" Margin="10" Click="ReturnBookButton_Click" FontSize="12"/>
 
                 </Grid>
 
-                <Grid Grid.Row="1" x:Name="PickedUserGrid" VerticalAlignment="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <Grid Grid.Row="2" x:Name="PickedUserGrid" VerticalAlignment="Bottom">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Margin="5, 5, 0, 5" Content="A bérlő olvasó" FontWeight="Bold" FontSize="12" />
-                    <Label Grid.Column="1" Grid.Row="0" Margin="-5, 5, 5, 5" Content="adatai:" FontWeight="Bold" FontSize="12" />
+                    <Label Grid.Row="0" Margin="0, 5, 0, 5" Content="A bérlési munkamenetben lévő olvasó adatai:" FontWeight="Bold" FontSize="12" />
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Vezetéknév" Margin="10"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" Focusable="False" MaxLength="30" x:Name="UserLastNameTextBox" Margin="10"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Keresztnév" Margin="10"/>
-                    <TextBox Grid.Column="1" Grid.Row="2" Focusable="False" MaxLength="30" x:Name="UserFirstNameTextBox" Margin="10"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Születési idő" Margin="10"/>
-                    <TextBox Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="UserDateOfBirthTextBox" Margin="10" />
+                        <Label Grid.Column="0" Grid.Row="0" Content="Vezetéknév" Margin="10" FontSize="12"/>
+                        <TextBox Grid.Column="1" Grid.Row="0" Focusable="False" MaxLength="30" x:Name="UserLastNameTextBox" Margin="10" FontSize="12"/>
 
-                    <Button Grid.Column="1" Grid.Row="4" x:Name="ExitUserButton" Content="Kölcsönzés befelyezése" Width="120" HorizontalAlignment="Right" Margin="10" Click="ExitUserButton_Click"/>
-                    
-               </Grid>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Keresztnév" Margin="10" FontSize="12"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Focusable="False" MaxLength="30" x:Name="UserFirstNameTextBox" Margin="10" FontSize="12"/>
+
+                        <Label Grid.Column="0" Grid.Row="2" Content="Születési idő" Margin="10" FontSize="12"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Focusable="False" x:Name="UserDateOfBirthTextBox" Margin="10" FontSize="12" />
+                    </Grid>
+
+                    <Button Grid.Row="2" x:Name="ShowBorrowedButton" Content="Kikölcsönzött könyvek mutatása" Width="225" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Click="ShowBorrowedButton_Click" FontSize="12"/>
+
+                    <Button Grid.Row="3" x:Name="ExitUserButton" Content="Kölcsönzési munkamenet befelyezése" Width="225" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Click="ExitUserButton_Click" FontSize="12"/>
+
+                </Grid>
 
             </Grid>
 
@@ -114,17 +137,17 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Name="AllBookButton" Content="Összes könyv frissítése" Width="120" HorizontalAlignment="Left" Margin="10" Click="AllBookButton_Click"/>
+            <Button Grid.Column="0" x:Name="AllBookButton" Content="Összes könyv frissítése" Width="150" HorizontalAlignment="Left" Margin="10" Click="AllBookButton_Click" FontSize="14"/>
             
-            <TextBox Grid.Column="1" MaxLength="20" x:Name="CodeTextBox" Margin="10"/>
+            <TextBox Grid.Column="1" MaxLength="20" x:Name="CodeTextBox" Margin="10" FontSize="14"/>
 
-            <Button Grid.Column="2" x:Name="SearchBookButton" Content="Könyv keresése" Width="100" HorizontalAlignment="Left" Margin="10" Click="SearchBookButton_Click"/>
+            <Button Grid.Column="2" x:Name="SearchBookButton" Content="Könyv keresése" Width="100" HorizontalAlignment="Left" Margin="10" Click="SearchBookButton_Click" FontSize="14"/>
 
             <Button Grid.Column="3" x:Name="BorrowBookButton" Content="Könyv kölcsönzése" Width="100" HorizontalAlignment="Left" Margin="10" Click="BorrowBookButton_Click"/>
 
-            <Button Grid.Column="3" x:Name="PickReaderButton" Content="Olvasó kiválasztása" Width="100" HorizontalAlignment="Left" Margin="10" Click="PickReaderButton_Click"/>
+            <Button Grid.Column="3" x:Name="PickReaderButton" Content="Olvasó kiválasztása" Width="125" HorizontalAlignment="Left" Margin="10" Click="PickReaderButton_Click" FontSize="14"/>
 
-            <Button Grid.Column="4" x:Name="AddOrUpdateBookButton" Content="Könyv hozzáadása vagy frissítése" Width="180" HorizontalAlignment="Right" Margin="10" Click="AddOrUpdateBookButton_Click"/>
+            <Button Grid.Column="4" x:Name="AddOrUpdateBookButton" Content="Könyv hozzáadása vagy frissítése" Width="225" HorizontalAlignment="Right" Margin="10" Click="AddOrUpdateBookButton_Click" FontSize="14"/>
 
         </Grid>
 

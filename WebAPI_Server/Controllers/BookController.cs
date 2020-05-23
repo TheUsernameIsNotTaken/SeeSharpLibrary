@@ -69,6 +69,22 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        //Search books by their borrower.
+        [HttpGet("borrowed/{id}")]
+        public ActionResult<IEnumerable<Book>> SearchBorrowed(long borrowerId)
+        {
+            var books = BookRepository.SearchBookByBorrower(borrowerId);
+            //Check successs
+            if (books != null)
+            {
+                return Ok(books);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         //Receive and store a single book's data.
         [HttpPost]
         public ActionResult Post(Book book)

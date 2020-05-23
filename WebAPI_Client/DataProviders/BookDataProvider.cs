@@ -40,24 +40,24 @@ namespace Admin_Client.DataProviders
             LibraryDataProvider.UpdateData(_url, book, book.Id);
         }
 
-        ////Search multiple existing books in the database on the server by part of their Code.
-        //public static IList<Book> SearchBooks(string code)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        var response = client.GetAsync(_url + "/search/" + code).Result;
+        //Search multiple existing books in the database on the server by their borrower's Id.
+        public static IList<Book> SearchBooksByBorrower(long id)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.GetAsync(_url + "/borrowed/" + id).Result;
 
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var rawData = response.Content.ReadAsStringAsync().Result;
-        //            var books = JsonConvert.DeserializeObject<IList<Book>>(rawData);
-        //            return books;
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidOperationException(response.StatusCode.ToString());
-        //        }
-        //    }
-        //}
+                if (response.IsSuccessStatusCode)
+                {
+                    var rawData = response.Content.ReadAsStringAsync().Result;
+                    var books = JsonConvert.DeserializeObject<IList<Book>>(rawData);
+                    return books;
+                }
+                else
+                {
+                    throw new InvalidOperationException(response.StatusCode.ToString());
+                }
+            }
+        }
     }
 }

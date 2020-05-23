@@ -15,6 +15,7 @@ namespace Library_Models
         /// Constant <c>BORROWINGWEEKS</c> defines the # of weeks, that a person can borrow a book.
         /// </summary>
         public static readonly int BORROWINGWEEKS = 3;
+
         // Book data properties:
         /// <value>
         /// Property <c>Id</c> represents the Book's ID in the library and it's key in the database.

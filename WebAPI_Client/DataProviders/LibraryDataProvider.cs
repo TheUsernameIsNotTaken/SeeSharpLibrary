@@ -54,11 +54,11 @@ namespace Admin_Client.DataProviders
         }
 
         //Search multiple existing entries in the database on the server by a part of their data.
-        public static IList<T> SearchData<T>(string url, string dataPart)
+        public static IList<T> SearchByStringData<T>(string searchUrl, string dataPart)
         {
             using (var client = new HttpClient())
             {
-                var response = client.GetAsync(url + "/search/" + dataPart).Result;
+                var response = client.GetAsync(searchUrl + dataPart).Result;
 
                 if (response.IsSuccessStatusCode)
                 {

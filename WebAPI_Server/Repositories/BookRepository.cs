@@ -46,6 +46,16 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Get a list of books' data by it's borrower's Id.
+        public static IList<Book> SearchBookByBorrower(long borrowerId)
+        {
+            using (var database = new BookContext())
+            {
+                var books = database.Books.Where(b => b.BorrowerId.Equals(borrowerId)).ToList();
+                return books;
+            }
+        }
+
         //Add a single book's data.
         public static void AddBook(Book book)
         {
