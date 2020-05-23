@@ -31,7 +31,7 @@ namespace Admin_Client
         {
             InitializeComponent();
 
-            //Get default data for private variables
+            //Initialize private variables
             _searced = false;
             _borrower = null;
             _selectedBook = null;
@@ -139,20 +139,6 @@ namespace Admin_Client
             SetBorrowerVisibility(borrowed);
         }
 
-        //Cancel date picking
-        private void BOD_SelectedDatesChanged(object sender, RoutedEventArgs e)
-        {
-            if(_borrower != null)
-            {
-                BorrowerDateOfBirthDatePicker.SelectedDate = _borrower.DateOfBirth;
-                BorrowerEndDatePicker.SelectedDate = _selectedBook.ReturnUntil;
-            }
-            if(_selectedPerson != null)
-            {
-                UserDateOfBirthDatePicker.SelectedDate = _selectedPerson.DateOfBirth;
-            }
-        }
-
         //End the current borrower user's borrowing. Like a log-out.
         private void ExitUserButton_Click(object sender, RoutedEventArgs e)
         {
@@ -170,8 +156,8 @@ namespace Admin_Client
             {
                 BorrowerLastNameTextBox.Text = _borrower.LastName;
                 BorrowerFirstNameTextBox.Text = _borrower.FirstName;
-                BorrowerDateOfBirthDatePicker.SelectedDate = _borrower.DateOfBirth;
-                BorrowerEndDatePicker.SelectedDate = _selectedBook.ReturnUntil;
+                BorrowerDateOfBirthTextBox.Text = _borrower.DateOfBirth.Date.ToString().Split(' ')[0];
+                BorrowerEndTextBox.Text = _selectedBook.ReturnUntil.ToString();
             }
         }
 
@@ -187,7 +173,7 @@ namespace Admin_Client
                 //View the user's data
                 UserLastNameTextBox.Text = _selectedPerson.LastName;
                 UserFirstNameTextBox.Text = _selectedPerson.FirstName;
-                UserDateOfBirthDatePicker.SelectedDate = _selectedPerson.DateOfBirth;
+                UserDateOfBirthTextBox.Text = _selectedPerson.DateOfBirth.Date.ToString().Split(' ')[0];
             }
             else
             {
@@ -202,7 +188,7 @@ namespace Admin_Client
         //Update the book list
         private void UpdateBooks()
         {
-            _books = _searced ? BookDataProvider.SearchBooks(CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
+            _books = _searced ? LibraryDataProvider.SearchData<Book>(LibraryDataProvider.bookUrl, CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
             BooksDataGrid.ItemsSource = _books;
             _selectedBook = null;
         }

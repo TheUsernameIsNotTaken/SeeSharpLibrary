@@ -37,6 +37,22 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        //Search person by their name.
+        [HttpGet("search/{name}")]
+        public ActionResult<IEnumerable<Book>> SearchByCode(string name)
+        {
+            var books = PersonRepository.SearchPersonByName(name);
+            //Check successs
+            if (books != null)
+            {
+                return Ok(books);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         //Receive and store a single person's data.
         [HttpPost]
         public ActionResult Post(Person person)

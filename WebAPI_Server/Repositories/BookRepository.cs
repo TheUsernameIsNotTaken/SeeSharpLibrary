@@ -36,7 +36,7 @@ namespace WebAPI_Server.Repositories
             }
         }
 
-        //Get a list of books' data by the part oh their code
+        //Get a list of books' data by the part of their code
         public static IList<Book> SearchBookByCode(string code)
         {
             using (var database = new BookContext())

@@ -64,10 +64,10 @@
                     <TextBox Grid.Column="1" Grid.Row="2" Focusable="False" MaxLength="30" x:Name="BorrowerFirstNameTextBox" Margin="10"/>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Születési idő" Margin="10"/>
-                    <DatePicker Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="BorrowerDateOfBirthDatePicker" Margin="10" SelectedDateChanged="BOD_SelectedDatesChanged" />
+                    <TextBox Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="BorrowerDateOfBirthTextBox" Margin="10" />
 
                     <Label Grid.Column="0" Grid.Row="4" Content="Lejárati határidő" Margin="10"/>
-                    <DatePicker Grid.Column="1" Grid.Row="4" Focusable="False" x:Name="BorrowerEndDatePicker" Margin="10" SelectedDateChanged="BOD_SelectedDatesChanged" />
+                    <TextBox Grid.Column="1" Grid.Row="4" Focusable="False" x:Name="BorrowerEndTextBox" Margin="10" />
 
                 </Grid>
 
@@ -95,7 +95,7 @@
                     <TextBox Grid.Column="1" Grid.Row="2" Focusable="False" MaxLength="30" x:Name="UserFirstNameTextBox" Margin="10"/>
 
                     <Label Grid.Column="0" Grid.Row="3" Content="Születési idő" Margin="10"/>
-                    <DatePicker Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="UserDateOfBirthDatePicker" Margin="10" SelectedDateChanged="BOD_SelectedDatesChanged" />
+                    <TextBox Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="UserDateOfBirthTextBox" Margin="10" />
 
                     <Button Grid.Column="1" Grid.Row="4" x:Name="ExitUserButton" Content="Kölcsönzés befelyezése" Width="120" HorizontalAlignment="Right" Margin="10" Click="ExitUserButton_Click"/>
                     

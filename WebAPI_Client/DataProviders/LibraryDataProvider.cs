@@ -53,6 +53,26 @@ namespace Admin_Client.DataProviders
             }
         }
 
+        //Search multiple existing entries in the database on the server by a part of their data.
+        public static IList<T> SearchData<T>(string url, string dataPart)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = client.GetAsync(url + "/search/" + dataPart).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var rawData = response.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<IList<T>>(rawData);
+                    return data;
+                }
+                else
+                {
+                    throw new InvalidOperationException(response.StatusCode.ToString());
+                }
+            }
+        }
+
         //Send a new data to a database on the server to save it.
         public static void CreateData<T>(string url, T entity)
         {
