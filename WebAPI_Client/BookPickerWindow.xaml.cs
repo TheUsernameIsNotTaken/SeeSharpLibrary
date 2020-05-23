@@ -118,9 +118,19 @@ namespace Admin_Client
                     if(result == System.Windows.Forms.DialogResult.Yes)
                     {
                         BookDataProvider.ReturnBook(_selectedBook, _selectedPerson, true);
+                        goto default;
                     }
+                    else
+                    {
+                        break;
+                    }
+                default:
+                    MessageBox.Show("A könyv sikeresen visszavéve!",
+                                    "Sikeres könyvleadás!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Asterisk);
+                    UpdateBooks();
                     break;
-                default:break;
             }
 
         }
@@ -187,6 +197,13 @@ namespace Admin_Client
                 BorrowerDateOfBirthTextBox.Text = _borrower.DateOfBirth.Date.ToString().Split(' ')[0];
                 BorrowerEndTextBox.Text = _selectedBook.ReturnUntil.ToString();
             }
+            //Show or Hide the return button
+            ReturnBookButton.Visibility =
+                _selectedPerson != null 
+                && _selectedBook != null 
+                && _selectedPerson.Id.Equals(_selectedBook.BorrowerId)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         //Update the borrowing procces's interface visibility
@@ -194,7 +211,7 @@ namespace Admin_Client
         {
             if (_selectedPerson != null)
             {
-                //View book borrowing interface 
+                //Show book borrowing interface 
                 PickedUserGrid.Visibility = Visibility.Visible;
                 BorrowBookButton.Visibility = Visibility.Visible;
                 //Hide borrow starting button
@@ -203,23 +220,30 @@ namespace Admin_Client
                 UserLastNameTextBox.Text = _selectedPerson.LastName;
                 UserFirstNameTextBox.Text = _selectedPerson.FirstName;
                 UserDateOfBirthTextBox.Text = _selectedPerson.DateOfBirth.Date.ToString().Split(' ')[0];
+                
             }
             else
             {
-                //View borrow starting button
+                //Show borrow starting button
                 PickReaderButton.Visibility = Visibility.Visible;
                 //Hide book borrowing interface
                 PickedUserGrid.Visibility = Visibility.Collapsed;
                 BorrowBookButton.Visibility = Visibility.Collapsed;
+                //Hide the return button
+                ReturnBookButton.Visibility = Visibility.Collapsed;
             }
         }
 
         //Update the book list
         private void UpdateBooks()
         {
+            //Update the list
             _books = _searced ? LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/search/", CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
             BooksDataGrid.ItemsSource = _books;
+            //No chosen item
+            BooksDataGrid.SelectedItem = null;
             _selectedBook = null;
+            SetBorrowerVisibility(false);
         }
     }
 }

@@ -64,15 +64,15 @@ namespace Admin_Client.DataProviders
 
         public static ReturnStatus Returnable(Book book, Person person)
         {
-            if(book.IsAvailable || !book.BorrowerId.Equals(person.Id))
+            if (book != null && person != null && !book.IsAvailable && book.BorrowerId.Equals(person.Id))
             {
-                return ReturnStatus.INVALID;
+                if(book.ReturnUntil < DateTime.Now || book.TimesExtended > Book.MAXEXTENDTIMES)
+                {
+                    return ReturnStatus.RULEBREAK;
+                }
+                return ReturnStatus.RETURNABLE;
             }
-            if(book.ReturnUntil > DateTime.Now || book.TimesExtended > Book.MAXEXTENDTIMES)
-            {
-                return ReturnStatus.RULEBREAK;
-            }
-            return ReturnStatus.RETURNABLE;
+            return ReturnStatus.INVALID;
         }
 
         //Search multiple existing books in the database on the server by their borrower's Id.
