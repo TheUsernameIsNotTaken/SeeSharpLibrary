@@ -1,18 +1,9 @@
 ﻿using Library_Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Admin_Client.DataProviders;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Admin_Client
 {
@@ -85,27 +76,52 @@ namespace Admin_Client
                     var updatedBook = LibraryDataProvider.GetSingleData<Book>(LibraryDataProvider.bookUrl, _selectedBook.Id);
                     MessageBox.Show("Az olvasó sikeresen kikölcsönözte a könyvet az alábbi időpontig: " + updatedBook.ReturnUntil.ToString() + "!",
                                             "Sikeres kölcsönzés!",
-                                            MessageBoxButton.OK);
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Asterisk);
                     UpdateBooks();
                 }
                 else
                 {
                     MessageBox.Show("A választott könyv jelenleg ki van kölcsönözve, legkésőbb az alábbi időpontig: " + _selectedBook.ReturnUntil.ToString() + "!",
-                                            "Sikeres kölcsönzés!",
-                                            MessageBoxButton.OK);
+                                            "Kölcsönzés sikertelen!",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Error);
                 }
             }
             else
             {
                 MessageBox.Show("Kérem válassza ki, hogy melyik könyvet kölcsönzi ki az olvasó!",
                                         "Könyv nem található!",
-                                        MessageBoxButton.OK);
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Exclamation);
             }
         }
 
         //Return a book
         private void ReturnBookButton_Click(object sender, RoutedEventArgs e)
         {
+            var status = BookDataProvider.ReturnBook(_selectedBook, _selectedPerson, false);
+            switch (status)
+            {
+                case null: MessageBox.Show( "Az alábbi könyvet nem szolgáltathatja vissza az olvasó, mivel nem ő bérelte ki!",
+                                            "Rossz adatok!",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Error);
+                    break;
+                case false:
+                    var result = MessageBox.Show(   "Az alábbi könyvet késedelmi, vagy más büntetési díj megfizetése terheli! " +
+                                                    "Amennyiben ezt már a felhasználó megtette, akkor az igen gomb megnyomásával végérvényesítheti a könyv visszaszolgáltatásának folyamatát." +
+                                                    "\n\nKifizette a felhasználó a díjat? ",
+                                                    "Büntetés kifizetése kötelező !",
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question);
+                    if(result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        BookDataProvider.ReturnBook(_selectedBook, _selectedPerson, true);
+                    }
+                    break;
+                default:break;
+            }
 
         }
 

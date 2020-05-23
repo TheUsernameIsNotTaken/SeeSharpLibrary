@@ -3,6 +3,34 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Library_Models
 {
+
+    /// <summary>
+    /// Enum <c>ReturnStatus</c> helps to determine the returnable state of a book.
+    /// </summary>
+    /// <remarks>
+    /// The enum is created to validate the returnable status of the book.
+    /// </remarks>
+    public enum ReturnStatus {
+        /// <summary>
+        /// State <c>INVALID</c> is reached, when the retrun is not possible because basic logical rules.
+        /// <example>
+        /// For example when the book is borrowed by an another user. 
+        /// </example>
+        /// </summary>
+        INVALID,
+        /// <summary>
+        /// State <c>OVERTIME</c> is reached, when a simple retrun is not possible because of the library's return rules.
+        /// <example>
+        /// For example when a book has been charged with late return penality, and because of this it has to be payed.
+        /// </example>
+        /// </summary>
+        RULEBREAK,
+        /// <summary>
+        /// State <c>RETURNABLE</c> is reached, when a book is returnable.
+        /// </summary>
+        RETURNABLE
+    };
+
     /// <summary>
     /// Class <c>Book</c> models a book owned by the library.
     /// </summary>
@@ -15,6 +43,11 @@ namespace Library_Models
         /// Constant <c>BORROWINGWEEKS</c> defines the # of weeks, that a person can borrow a book.
         /// </summary>
         public static readonly int BORROWINGWEEKS = 3;
+
+        /// <summary>
+        /// Constant <c>MAXEXTENDTIMES</c> defines the maximum # of borrow time extends.
+        /// </summary>
+        public static readonly byte MAXEXTENDTIMES = 2;
 
         // Book data properties:
         /// <value>
@@ -63,6 +96,11 @@ namespace Library_Models
         /// It's value is null if it is not borrowed at the moment.
         /// </value>
         public DateTime? ReturnUntil { get; set; }
+        /// <value>
+        /// Property <c>BorrowerId</c> contains the borrower's ID.
+        /// It's value is null if it is not borrowed at the moment.
+        /// </value>
+        public byte? TimesExtended { get; set; }
 
         /// <summary>
         /// Generates the Book's Hash Code.

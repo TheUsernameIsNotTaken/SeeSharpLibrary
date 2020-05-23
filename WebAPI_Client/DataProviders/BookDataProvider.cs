@@ -9,6 +9,7 @@ namespace Admin_Client.DataProviders
 {
     public static class BookDataProvider
     {
+
         private static string _url = LibraryDataProvider.bookUrl;
 
         //Get a single data inside a database from the server by it's code.
@@ -37,7 +38,41 @@ namespace Admin_Client.DataProviders
             book.IsAvailable = false;
             book.BorrowerId = person.Id;
             book.ReturnUntil = DateTime.Now.AddDays(Book.BORROWINGWEEKS * 7);
+            book.TimesExtended = 0;
             LibraryDataProvider.UpdateData(_url, book, book.Id);
+        }
+
+        //Borrow a book from the library as a person.
+        public static bool? ReturnBook(Book book, Person person, bool forced)
+        {
+            ReturnStatus status = Returnable(book, person);
+            if (status == ReturnStatus.RETURNABLE || (status == ReturnStatus.RULEBREAK && forced) )
+            {
+                book.IsAvailable = true;
+                book.BorrowerId = null;
+                book.ReturnUntil = null;
+                book.TimesExtended = null;
+                LibraryDataProvider.UpdateData(_url, book, book.Id);
+                return true;
+            }
+            else if(status == ReturnStatus.RULEBREAK && !forced)
+            {
+                return false;
+            }
+            return null;
+        }
+
+        public static ReturnStatus Returnable(Book book, Person person)
+        {
+            if(book.IsAvailable || !book.BorrowerId.Equals(person.Id))
+            {
+                return ReturnStatus.INVALID;
+            }
+            if(book.ReturnUntil > DateTime.Now || book.TimesExtended > Book.MAXEXTENDTIMES)
+            {
+                return ReturnStatus.RULEBREAK;
+            }
+            return ReturnStatus.RETURNABLE;
         }
 
         //Search multiple existing books in the database on the server by their borrower's Id.
