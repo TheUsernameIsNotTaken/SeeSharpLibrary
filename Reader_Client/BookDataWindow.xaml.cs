@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using Reader_Client.DataProviders;
 using Library_Models;
 using System.Windows.Forms;
@@ -15,7 +14,7 @@ namespace Reader_Client
     public partial class BookDataWindow : Window
     {
         //Basic data
-        private readonly Person _borrower;
+        private Person _borrower;
         private IList<Book> _books;
         private Book _selectedBook;
 
@@ -41,29 +40,33 @@ namespace Reader_Client
             //Update the book
             _selectedBook = BooksDataGrid.SelectedItem as Book;
 
-            //Update the book's data
-            BorrowDateTextBox.Text = ArchiveDataProvider.GetSpecificBorrowDateTime(_selectedBook.Id, _borrower.Id).ToString();
-            ReturnDateTextBox.Text = _selectedBook.ReturnUntil.ToString();
-            NumberOfExtendsTextBox.Text = _selectedBook.TimesExtended.ToString() + " alkalommal";
-            switch (BookDataProvider.Returnable(_selectedBook, _borrower))
+            if (_selectedBook != null)
             {
-                case ReturnStatus.INVALID:
-                    ReturnableLabel.Content = "Hiba! Keressen fel egy könyvtárost!";
-                    break;
-                case ReturnStatus.RULEBREAK:
-                    ReturnableLabel.Content = "A könyvet díjmegfizetés terheli.";
-                    break;
-                case ReturnStatus.RETURNABLE:
-                    ReturnableLabel.Content = "A könyv visszaszolgáltatható.";
-                    break;
+                //Update the book's data
+                BorrowDateTextBox.Text = ArchiveDataProvider.GetSpecificBorrowDateTime(_selectedBook.Id, _borrower.Id).ToString();
+                ReturnDateTextBox.Text = _selectedBook.ReturnUntil.ToString();
+                NumberOfExtendsTextBox.Text = _selectedBook.TimesExtended.ToString() + " alkalommal";
+                switch (BookDataProvider.Returnable(_selectedBook, _borrower))
+                {
+                    case ReturnStatus.INVALID:
+                        ReturnableLabel.Content = "Hiba! Keressen fel egy könyvtárost!";
+                        break;
+                    case ReturnStatus.RULEBREAK:
+                        ReturnableLabel.Content = "A könyvet díjmegfizetés terheli.";
+                        break;
+                    case ReturnStatus.RETURNABLE:
+                        ReturnableLabel.Content = "A könyv visszaszolgáltatható.";
+                        break;
+                }
             }
+            
         }
 
         //Search by Author
         private void SearchByAuthorButton_Click(object sender, RoutedEventArgs e)
         {
             //Update the list
-            _books = LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/searchByAuthor/", SearchTextBox.Text);
+            _books = LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/searchByAuthor/" + _borrower.Id +  "/", SearchTextBox.Text);
             BooksDataGrid.ItemsSource = _books;
         }
 
@@ -71,25 +74,25 @@ namespace Reader_Client
         private void SearchByTitleButton_Click(object sender, RoutedEventArgs e)
         {
             //Update the list
-            _books = LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/searchByTitle/", SearchTextBox.Text);
+            _books = LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/searchByTitle/" + _borrower.Id + "/", SearchTextBox.Text);
             BooksDataGrid.ItemsSource = _books;
         }
 
         //Extend the borrowing time by a week
         private void ExtendButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (BookDataProvider.ExtendBorrow(_selectedBook))
+            switch (BookDataProvider.ExtendBorrow(_selectedBook, _borrower))
             {
                 case 1:
-                    MessageBox.Show("Sikertelen meghosszabbítás hibásm adatok miatt! Kérem keressen fel egy könyvtárost!",
+                    MessageBox.Show("Sikertelen meghosszabbítás hibás adatok miatt! Kérem keressen fel egy könyvtárost!",
                                     "Hibás adatok!",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Error);
                     break;
                 case 2:
-                    MessageBox.Show("Már nem hosszabbíthatja könyvkölcsönzését!" +
-                                    " Ez lehet azért, mert már elérte a maximális hosszabbítások számát, de azért is, mert már késedelmi díj megfizetésére kötelezett." +
-                                    " Kérem lépjen kapcsolatba egy könyvtárossal!",
+                    MessageBox.Show("Már nem hosszabbíthatja könyvkölcsönzését!\n" +
+                                    "Ez azért lehetséges, mert már elérte a maximális hosszabbítások számát, vagy mert késedelmi díj megfizetésére kötelezett. " +
+                                    "Kérem lépjen kapcsolatba egy könyvtárossal! ",
                                     "Hosszabbítás nem lehetséges!",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Warning);

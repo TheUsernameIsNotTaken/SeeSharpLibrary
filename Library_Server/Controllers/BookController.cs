@@ -79,10 +79,10 @@ namespace WebAPI_Server.Controllers
         }
 
         //Search books by their code.
-        [HttpGet("searchByAuthor/{author}")]
-        public ActionResult<IEnumerable<Book>> SearchByAuthor(string author)
+        [HttpGet("searchByAuthor/{id}/{author}")]
+        public ActionResult<IEnumerable<Book>> SearchByAuthor(long id, string author)
         {
-            var books = BookRepository.SearchBookByExpression(b => b.Author.Contains(author));
+            var books = BookRepository.SearchBookByExpression(b => b.Author.Contains(author) && b.BorrowerId.Value.Equals(id));
             //Check successs
             if (books != null)
             {
@@ -93,11 +93,12 @@ namespace WebAPI_Server.Controllers
                 return NotFound();
             }
         }
+
         //Search books by their Title.
-        [HttpGet("searchByTitle/{title}")]
-        public ActionResult<IEnumerable<Book>> SearchByTitle(string title)
+        [HttpGet("searchByTitle/{id}/{title}")]
+        public ActionResult<IEnumerable<Book>> SearchByTitle(long id, string title)
         {
-            var books = BookRepository.SearchBookByExpression(b => b.Title.Contains(title));
+            var books = BookRepository.SearchBookByExpression(b => b.Title.Contains(title) && b.BorrowerId.Value.Equals(id));
             //Check successs
             if (books != null)
             {
@@ -110,10 +111,10 @@ namespace WebAPI_Server.Controllers
         }
 
         //Search books by their borrower.
-        [HttpGet("borrowed/{id}")]
+        [HttpGet("borrower/{borrowerId}")]
         public ActionResult<IEnumerable<Book>> SearchBorrowed(long borrowerId)
         {
-            var books = BookRepository.SearchBookByBorrower(borrowerId);
+            var books = BookRepository.SearchBookByExpression(b => b.BorrowerId.Value.Equals(borrowerId));
             //Check successs
             if (books != null)
             {

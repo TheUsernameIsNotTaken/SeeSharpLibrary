@@ -38,8 +38,6 @@ namespace WebAPI_Server.Controllers
             }
         }
 
-
-
         //Send a specific archived data by the two ids.
         [HttpGet("specific/{bookId}+{borrowerId}")]
         public ActionResult<ArchiveData> GetSpecific(long bookId, long borrowerId)

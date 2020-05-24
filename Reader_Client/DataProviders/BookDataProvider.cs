@@ -12,32 +12,32 @@ namespace Reader_Client.DataProviders
 
         private static string _url = LibraryDataProvider.bookUrl;
 
-        //Get a single data inside a database from the server by it's code.
-        public static Book GetSingleData(string code)
-        {
-            using (var client = new HttpClient())
-            {
-                var response = client.GetAsync(_url + "/get/" + code).Result;
+        ////Get a single data inside a database from the server by it's code.
+        //public static Book GetSingleData(string code)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        var response = client.GetAsync(_url + "/get/" + code).Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var rawData = response.Content.ReadAsStringAsync().Result;
-                    var singleData = JsonConvert.DeserializeObject<Book>(rawData);
-                    return singleData;
-                }
-                else
-                {
-                    throw new InvalidOperationException(response.StatusCode.ToString());
-                }
-            }
-        }
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var rawData = response.Content.ReadAsStringAsync().Result;
+        //            var singleData = JsonConvert.DeserializeObject<Book>(rawData);
+        //            return singleData;
+        //        }
+        //        else
+        //        {
+        //            throw new InvalidOperationException(response.StatusCode.ToString());
+        //        }
+        //    }
+        //}
 
         //Search multiple existing books in the database on the server by their borrower's Id.
         public static IList<Book> SearchBooksByBorrower(long id)
         {
             using (var client = new HttpClient())
             {
-                var response = client.GetAsync(_url + "/borrowed/" + id).Result;
+                var response = client.GetAsync(_url + "/borrower/" + id).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -58,7 +58,8 @@ namespace Reader_Client.DataProviders
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="book">The book, which's borrow time we want to expend</param>
+        /// <param name="book">The book, which's borrow time we want to expend.</param>
+        /// <param name="borrower">The person, who wants to extend the borrowing time.</param>
         /// <returns>
         ///     <list>
         ///         <listheader>
@@ -85,10 +86,10 @@ namespace Reader_Client.DataProviders
         ///         </item>
         ///     </list>
         /// </returns>
-        public static int ExtendBorrow(Book book)
+        public static int ExtendBorrow(Book book, Person borrower)
         {
             if (book != null && book.BorrowerId != null){
-                if (book.TimesExtended < Book.MAXEXTENDTIMES && DateTime.Now < book.ReturnUntil)
+                if (book.TimesExtended < Book.MAXEXTENDTIMES && DateTime.Now < book.ReturnUntil && book.BorrowerId == borrower.Id)
                 {
                     if (DateTime.Now > book.ReturnUntil.Value.AddDays(-7))
                     {

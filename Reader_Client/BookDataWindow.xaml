@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Reader_Client"
         mc:Ignorable="d"
-        Title="BookPickerWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+        Title="BookDataWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -98,9 +98,9 @@
 
             <TextBox Grid.Column="1" MaxLength="20" x:Name="SearchTextBox" Margin="10" FontSize="14"/>
 
-            <Button Grid.Column="2" x:Name="SearchByAuthorButton" Content="Keresés költő alapján" Width="150" HorizontalAlignment="Left" Margin="10" Click="SearchByAuthorButton_Click" FontSize="14"/>
+            <Button Grid.Column="2" x:Name="SearchByAuthorButton" Content="Keresés író alapján" Width="130" HorizontalAlignment="Left" Margin="10" Click="SearchByAuthorButton_Click" FontSize="14"/>
 
-            <Button Grid.Column="3" x:Name="SearchByTitleButton" Content="Keresés író alapján" Width="150" HorizontalAlignment="Left" Margin="10" Click="SearchByTitleButton_Click" FontSize="14" />
+            <Button Grid.Column="3" x:Name="SearchByTitleButton" Content="Keresés cím alapján" Width="130" HorizontalAlignment="Left" Margin="10" Click="SearchByTitleButton_Click" FontSize="14" />
 
         </Grid>
 

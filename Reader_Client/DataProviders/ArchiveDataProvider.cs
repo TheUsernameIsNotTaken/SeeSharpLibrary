@@ -11,11 +11,11 @@ namespace Reader_Client.DataProviders
         private static string _url = LibraryDataProvider.archiveUrl;
 
         //Get a specific existing data's Borrowed DateTime in the database on the server by it's ids.
-        public static DateTime GetSpecificBorrowDateTime(long bookId, long borrowerId)
+        public static DateTime? GetSpecificBorrowDateTime(long bookId, long borrowerId)
         {
             using (var client = new HttpClient())
             {
-                var response = client.GetAsync(_url + "/specific/" + bookId + "+" + borrowerId).Result;
+                var response = client.GetAsync(_url + "/specific/" + bookId.ToString() + "+" + borrowerId.ToString()).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -25,7 +25,7 @@ namespace Reader_Client.DataProviders
                 }
                 else
                 {
-                    throw new InvalidOperationException(response.StatusCode.ToString());
+                    return null;
                 }
             }
         }

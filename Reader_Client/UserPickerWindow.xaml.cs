@@ -37,6 +37,7 @@ namespace Reader_Client
         //Set the borrowing user
         private void BorrowedBooksButton_Click(object sender, RoutedEventArgs e)
         {
+            _selectedPerson = PeopleListBox.SelectedItem as Person;
             if (_selectedPerson == null)
             {
                 MessageBox.Show("Kölcsönzési adatok megtekintéséhez válasszon ki egy olvasót!",
@@ -47,7 +48,11 @@ namespace Reader_Client
             else
             {
                 //Open a dialog window with the correct data. 
-                //TODO
+                var window = new BookDataWindow(_selectedPerson);
+                if (window.ShowDialog() ?? false)
+                {
+                    UpdatePeople();
+                }
             }
         }
 
