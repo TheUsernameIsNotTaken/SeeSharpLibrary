@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{77781D96-58D3-4DDA-9FCC-5D8DBFCC6515}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WebAPI_Client</RootNamespace>
-    <AssemblyName>WebAPI_Client</AssemblyName>
+    <RootNamespace>Admin_Client</RootNamespace>
+    <AssemblyName>Admin_Client</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -196,7 +196,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibraryModels\Library_Models.csproj">
+    <ProjectReference Include="..\Library_Models\Library_Models.csproj">
       <Project>{D8A233FA-5F16-47DB-8D5F-05F3B800616E}</Project>
       <Name>Library_Models</Name>
     </ProjectReference>

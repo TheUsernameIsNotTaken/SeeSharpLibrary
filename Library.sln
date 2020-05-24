@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library_Server", "WebAPI_Server\Library_Server.csproj", "{2CC10307-B295-41F6-9529-8731908D5AEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library_Server", "Library_Server\Library_Server.csproj", "{2CC10307-B295-41F6-9529-8731908D5AEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin_Client", "WebAPI_Client\Admin_Client.csproj", "{77781D96-58D3-4DDA-9FCC-5D8DBFCC6515}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin_Client", "Admin_Client\Admin_Client.csproj", "{77781D96-58D3-4DDA-9FCC-5D8DBFCC6515}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library_Models", "LibraryModels\Library_Models.csproj", "{D8A233FA-5F16-47DB-8D5F-05F3B800616E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library_Models", "Library_Models\Library_Models.csproj", "{D8A233FA-5F16-47DB-8D5F-05F3B800616E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
