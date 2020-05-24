@@ -83,19 +83,21 @@ namespace Admin_Client
                                             MessageBoxIcon.Asterisk);
 
                     //Archivate the borrowing data.
-                    ArchiveData save = new ArchiveData();
-                    //Borrow time.
-                    save.BorrowedAt = DateTime.Now;
-                    //Borrowed book's data.
-                    save.BookId = _selectedBook.Id;
-                    save.Author = _selectedBook.Author;
-                    save.Title = _selectedBook.Title;
-                    save.Code = _selectedBook.Code;
-                    //Borrower's data.
-                    save.BorrowerId = _selectedPerson.Id;
-                    save.FirstName = _selectedPerson.FirstName;
-                    save.LastName = _selectedPerson.LastName;
-                    save.DateOfBirth = _selectedPerson.DateOfBirth;
+                    ArchiveData save = new ArchiveData
+                    {
+                        //Borrow time.
+                        BorrowedAt = DateTime.Now,
+                        //Borrowed book's data.
+                        BookId = _selectedBook.Id,
+                        Author = _selectedBook.Author,
+                        Title = _selectedBook.Title,
+                        Code = _selectedBook.Code,
+                        //Borrower's data.
+                        BorrowerId = _selectedPerson.Id,
+                        FirstName = _selectedPerson.FirstName,
+                        LastName = _selectedPerson.LastName,
+                        DateOfBirth = _selectedPerson.DateOfBirth
+                    };
                     //Save the borrowing data.
                     LibraryDataProvider.CreateData<ArchiveData>(LibraryDataProvider.archiveUrl, save);
                     

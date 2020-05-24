@@ -15,22 +15,16 @@ namespace Reader_Client
     public partial class BookDataWindow : Window
     {
         //Basic data
-        private Person _borrower;
+        private readonly Person _borrower;
         private IList<Book> _books;
         private Book _selectedBook;
-        private Person _selectedPerson;
-        //Helping data
-        private bool _searced;
 
         public BookDataWindow(Person person)
         {
             InitializeComponent();
 
             //Initialize private variables
-            _searced = false;
-            _borrower = null;
-            _selectedBook = null;
-            _selectedPerson = person;
+            _borrower = person;
 
             UpdateBooks();
         }
@@ -38,7 +32,6 @@ namespace Reader_Client
         //Update the books list with all of the database
         private void AllBookButton_Click(object sender, RoutedEventArgs e)
         {
-            _searced = false;
             UpdateBooks();
         }
 
@@ -49,32 +42,54 @@ namespace Reader_Client
             _selectedBook = BooksDataGrid.SelectedItem as Book;
 
             //Update the book's data
-            //TODO
+            BorrowDateTextBox.Text = ArchiveDataProvider.GetSpecificBorrowDateTime(_selectedBook.Id, _borrower.Id).ToString();
+            ReturnDateTextBox.Text = _selectedBook.ReturnUntil.ToString();
+            NumberOfExtendsTextBox.Text = _selectedBook.TimesExtended.ToString() + " alkalommal";
+            switch (BookDataProvider.Returnable(_selectedBook, _borrower))
+            {
+                case ReturnStatus.INVALID:
+                    ReturnableLabel.Content = "Hiba! Keressen fel egy könyvtárost!";
+                    break;
+                case ReturnStatus.RULEBREAK:
+                    ReturnableLabel.Content = "A könyvet díjmegfizetés terheli.";
+                    break;
+                case ReturnStatus.RETURNABLE:
+                    ReturnableLabel.Content = "A könyv visszaszolgáltatható.";
+                    break;
+            }
         }
 
         //Search by Author
         private void SearchByAuthorButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
-            _searced = !string.IsNullOrEmpty(SearchTextBox.Text);
-            UpdateBooks();
+            //Update the list
+            _books = LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/searchByAuthor/", SearchTextBox.Text);
+            BooksDataGrid.ItemsSource = _books;
         }
 
         //Search by Title
         private void SearchByTitleButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
-            _searced = !string.IsNullOrEmpty(SearchTextBox.Text);
-            UpdateBooks();
+            //Update the list
+            _books = LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/searchByTitle/", SearchTextBox.Text);
+            BooksDataGrid.ItemsSource = _books;
         }
-
-        //Search by Code
-        //TODO?
 
         //Extend the borrowing time by a week
         private void ExtendButton_Click(object sender, RoutedEventArgs e)
         {
-            var returned = BookDataProvider.ExtendBorrow(_selectedBook);
+            switch (BookDataProvider.ExtendBorrow(_selectedBook))
+            {
+                case null:
+                    //TODO
+                    break;
+                case false:
+                    //TODO
+                    break;
+                default:
+                    //TODO
+                    break;
+            }
         }
 
         //Update the book list
@@ -83,9 +98,16 @@ namespace Reader_Client
             //Update the list
             _books = BookDataProvider.SearchBooksByBorrower(_borrower.Id);
             BooksDataGrid.ItemsSource = _books;
+
             //No chosen item
             BooksDataGrid.UnselectAll();
             _selectedBook = null;
+
+            //Set all View to empty//Update the book's data
+            BorrowDateTextBox.Text = string.Empty;
+            ReturnDateTextBox.Text = string.Empty;
+            NumberOfExtendsTextBox.Text = string.Empty;
+            ReturnableLabel.Content = string.Empty;
         }
     }
 }

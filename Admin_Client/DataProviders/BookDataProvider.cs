@@ -9,7 +9,7 @@ namespace Admin_Client.DataProviders
     public static class BookDataProvider
     {
 
-        private static string _url = LibraryDataProvider.bookUrl;
+        private static readonly string _url = LibraryDataProvider.bookUrl;
 
         ////Get a single data inside a database from the server by it's code.
         //public static Book GetSingleData(string code)

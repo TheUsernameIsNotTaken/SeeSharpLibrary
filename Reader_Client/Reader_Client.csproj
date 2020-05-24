@@ -115,6 +115,7 @@
     <Compile Include="BookDataWindow.xaml.cs">
       <DependentUpon>BookDataWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataProviders\ArchiveDataProvider.cs" />
     <Compile Include="DataProviders\LibraryDataProvider.cs" />
     <Compile Include="DataProviders\BookDataProvider.cs" />
     <Compile Include="DataProviders\PersonDataProvider.cs" />

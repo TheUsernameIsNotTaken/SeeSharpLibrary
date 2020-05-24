@@ -47,6 +47,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <Grid>
@@ -56,8 +57,6 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -74,9 +73,12 @@
 
                         <Label Grid.Column="0" Grid.Row="3" Content="Hosszabbítva volt" Margin="10" FontSize="12"/>
                         <TextBox Grid.Column="1" Grid.Row="3" Focusable="False" x:Name="NumberOfExtendsTextBox" Margin="10" FontSize="12" />
+                        
                     </Grid>
 
-                    <Button Grid.Row="1" x:Name="ExtendButton" Content="Kölcsönzés hosszabbításának igénylése" Width="250" VerticalAlignment="Center" Margin="10" Click="ExtendButton_Click" FontSize="13" FontWeight="Bold"/>
+                    <Label Grid.Row="1" x:Name="ReturnableLabel" Content="" Margin="10" FontSize="12"/>
+                    
+                    <Button Grid.Row="2" x:Name="ExtendButton" Content="Kölcsönzés hosszabbításának igénylése" Width="250" VerticalAlignment="Center" Margin="10" Click="ExtendButton_Click" FontSize="13" FontWeight="Bold"/>
 
                 </Grid>
                 
