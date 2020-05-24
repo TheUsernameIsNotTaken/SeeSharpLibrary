@@ -30,9 +30,8 @@ namespace Library_Models
         /// <value>
         /// Property <c>BookId</c> contains the borrowed Book's ID.
         /// It stored to support a connection with the current database.
-        /// It is required in every modell.
+        /// Can be null after a deletion.
         /// </value>
-        [Required]
         public long? BookId { get; set; }
         /// <value>
         /// Property <c>Code</c> represents the borrowed Book's ISBN or other type of identifier code.
@@ -60,9 +59,8 @@ namespace Library_Models
         /// <value>
         /// Property <c>BorrowerId</c> contains the borrower Person's ID.
         /// It stored to support a connection with the current database.
-        /// It is required in every modell.
+        /// Can be null after a deletion.
         /// </value>
-        [Required]
         public long? BorrowerId { get; set; }
         /// <value>
         /// Property <c>FirstName</c> represents the borrower Person's first name.
