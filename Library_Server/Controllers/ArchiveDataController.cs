@@ -9,6 +9,11 @@ namespace WebAPI_Server.Controllers
     [ApiController]
     public class ArchiveDataController : ControllerBase
     {
+
+        /* -------------------- */
+        /*      SIMPLE GET      */
+        /* -------------------- */
+
         //Send all archived data.
         [HttpGet]
         public ActionResult<IEnumerable<ArchiveData>> Get()
@@ -33,6 +38,8 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+
+
         //Send a specific archived data by the two ids.
         [HttpGet("specific/{bookId}+{borrowerId}")]
         public ActionResult<ArchiveData> GetSpecific(long bookId, long borrowerId)
@@ -48,6 +55,10 @@ namespace WebAPI_Server.Controllers
                 return NotFound();
             }
         }
+
+        /* ------------------------- */
+        /*      SEARCH WITH GET      */
+        /* ------------------------- */
 
         //Send a specific archived data by the book id.
         [HttpGet("book/{bookId}")]
@@ -81,6 +92,10 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        /* ------------- */
+        /*      POST     */
+        /* ------------- */
+
         //Receive and store a single archived data.
         [HttpPost]
         public ActionResult Post(ArchiveData data)
@@ -89,6 +104,10 @@ namespace WebAPI_Server.Controllers
 
             return Ok();
         }
+
+        /* ------------ */
+        /*      PUT     */
+        /* ------------ */
 
         //Receive and update a single archived data.
         [HttpPut("{id}")]
@@ -102,6 +121,10 @@ namespace WebAPI_Server.Controllers
             }
             return NotFound();
         }
+
+        /* ---------------- */
+        /*      DELETE      */
+        /* ---------------- */
 
         //Delete a single archived data from the server
         [HttpDelete("{id}")]

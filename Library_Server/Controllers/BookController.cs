@@ -13,6 +13,11 @@ namespace WebAPI_Server.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+
+        /* -------------------- */
+        /*      SIMPLE GET      */
+        /* -------------------- */
+
         //Send all book's data.
         [HttpGet]
         public ActionResult<IEnumerable<Book>> Get()
@@ -37,27 +42,31 @@ namespace WebAPI_Server.Controllers
             }
         }
 
-        //Get a single book's data by it's code.
-        [HttpGet("get/{code}")]
-        public ActionResult<Book> GetByCode(string code)
-        {
-            var book = BookRepository.GetBookByCode(code);
-            //Check successs
-            if (book != null)
-            {
-                return Ok(book);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
+        ////Get a single book's data by it's code.
+        //[HttpGet("get/{code}")]
+        //public ActionResult<Book> GetByCode(string code)
+        //{
+        //    var book = BookRepository.GetBookByCode(code);
+        //    //Check successs
+        //    if (book != null)
+        //    {
+        //        return Ok(book);
+        //    }
+        //    else
+        //    {
+        //        return NotFound();
+        //    }
+        //}
 
+        /* ------------------------- */
+        /*      SEARCH WITH GET      */
+        /* ------------------------- */
+        
         //Search books by their code.
         [HttpGet("searchByCode/{code}")]
         public ActionResult<IEnumerable<Book>> SearchByCode(string code)
         {
-            var books = BookRepository.SearchBookByCode(code);
+            var books = BookRepository.SearchBookByExpression(b => b.Code.Contains(code));
             //Check successs
             if (books != null)
             {
@@ -69,7 +78,36 @@ namespace WebAPI_Server.Controllers
             }
         }
 
-        //TODO - ADD search by Author and Title
+        //Search books by their code.
+        [HttpGet("searchByAuthor/{author}")]
+        public ActionResult<IEnumerable<Book>> SearchByAuthor(string author)
+        {
+            var books = BookRepository.SearchBookByExpression(b => b.Author.Contains(author));
+            //Check successs
+            if (books != null)
+            {
+                return Ok(books);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        //Search books by their Title.
+        [HttpGet("searchByTitle/{title}")]
+        public ActionResult<IEnumerable<Book>> SearchByTitle(string title)
+        {
+            var books = BookRepository.SearchBookByExpression(b => b.Title.Contains(title));
+            //Check successs
+            if (books != null)
+            {
+                return Ok(books);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
         //Search books by their borrower.
         [HttpGet("borrowed/{id}")]
@@ -87,6 +125,10 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        /* ------------- */
+        /*      POST     */
+        /* ------------- */
+
         //Receive and store a single book's data.
         [HttpPost]
         public ActionResult Post(Book book)
@@ -95,6 +137,10 @@ namespace WebAPI_Server.Controllers
 
             return Ok();
         }
+
+        /* ------------ */
+        /*      PUT     */
+        /* ------------ */
 
         //Receive and update a single book's data.
         [HttpPut("{id}")]
@@ -108,6 +154,10 @@ namespace WebAPI_Server.Controllers
             }
             return NotFound();
         }
+
+        /* ---------------- */
+        /*      DELETE      */
+        /* ---------------- */
 
         //Delete a single book's data from the server
         [HttpDelete("{id}")]

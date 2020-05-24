@@ -13,6 +13,11 @@ namespace WebAPI_Server.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
+
+        /* -------------------- */
+        /*      SIMPLE GET      */
+        /* -------------------- */
+
         //Send all person's data.
         [HttpGet]
         public ActionResult<IEnumerable<Person>> Get()
@@ -37,6 +42,10 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        /* ------------------------- */
+        /*      SEARCH WITH GET      */
+        /* ------------------------- */
+
         //Search person by their name.
         [HttpGet("search/{name}")]
         public ActionResult<IEnumerable<Book>> SearchByCode(string name)
@@ -53,6 +62,10 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        /* ------------- */
+        /*      POST     */
+        /* ------------- */
+
         //Receive and store a single person's data.
         [HttpPost]
         public ActionResult Post(Person person)
@@ -61,6 +74,10 @@ namespace WebAPI_Server.Controllers
 
             return Ok();
         }
+
+        /* ------------ */
+        /*      PUT     */
+        /* ------------ */
 
         //Receive and update a single person's data.
         [HttpPut("{id}")]
@@ -74,6 +91,10 @@ namespace WebAPI_Server.Controllers
             }
             return NotFound();
         }
+
+        /* ---------------- */
+        /*      DELETE      */
+        /* ---------------- */
 
         //Delete a single person's data from the server.
         [HttpDelete("{id}")]

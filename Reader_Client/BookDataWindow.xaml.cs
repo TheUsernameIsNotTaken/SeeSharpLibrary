@@ -74,7 +74,7 @@ namespace Reader_Client
         //Extend the borrowing time by a week
         private void ExtendButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            var returned = BookDataProvider.ExtendBorrow(_selectedBook);
         }
 
         //Update the book list
