@@ -4,6 +4,7 @@ using System.Windows;
 using Admin_Client.DataProviders;
 using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
+using System;
 
 namespace Admin_Client
 {
@@ -80,6 +81,25 @@ namespace Admin_Client
                                             "Sikeres kölcsönzés!",
                                             MessageBoxButtons.OK,
                                             MessageBoxIcon.Asterisk);
+
+                    //Archivate the borrowing data.
+                    ArchiveData save = new ArchiveData();
+                    //Borrow time.
+                    save.BorrowedAt = DateTime.Now;
+                    //Borrowed book's data.
+                    save.BookId = _selectedBook.Id;
+                    save.Author = _selectedBook.Author;
+                    save.Title = _selectedBook.Title;
+                    save.Code = _selectedBook.Code;
+                    //Borrower's data.
+                    save.BorrowerId = _selectedPerson.Id;
+                    save.FirstName = _selectedPerson.FirstName;
+                    save.LastName = _selectedPerson.LastName;
+                    save.DateOfBirth = _selectedPerson.DateOfBirth;
+                    //Save the borrowing data.
+                    LibraryDataProvider.CreateData<ArchiveData>(LibraryDataProvider.archiveUrl, save);
+                    
+                    //Update the View.
                     UpdateBooks();
                 }
                 //Error if already borrowed
@@ -98,8 +118,6 @@ namespace Admin_Client
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Exclamation);
             }
-            //Archivate the borrowing data.
-            //TODO
         }
 
         //Return a book
@@ -108,18 +126,21 @@ namespace Admin_Client
             var status = BookDataProvider.ReturnBook(_selectedBook, _selectedPerson, false);
             switch (status)
             {
+                //Show error message.
                 case null: MessageBox.Show( "Az alábbi könyvet nem szolgáltathatja vissza az olvasó, mivel nem ő bérelte ki!",
                                             "Rossz adatok!",
                                             MessageBoxButtons.OK,
                                             MessageBoxIcon.Error);
                     break;
                 case false:
+                    //Ask for permission.
                     var result = MessageBox.Show(   "Az alábbi könyvet késedelmi, vagy más büntetési díj megfizetése terheli! " +
                                                     "Amennyiben ezt már a felhasználó megtette, akkor az igen gomb megnyomásával végérvényesítheti a könyv visszaszolgáltatásának folyamatát." +
                                                     "\n\nKifizette a felhasználó a díjat? ",
                                                     "Büntetés kifizetése kötelező !",
                                                     MessageBoxButtons.YesNo,
                                                     MessageBoxIcon.Question);
+                    //Save if allowed
                     if(result == System.Windows.Forms.DialogResult.Yes)
                     {
                         BookDataProvider.ReturnBook(_selectedBook, _selectedPerson, true);
@@ -130,15 +151,19 @@ namespace Admin_Client
                         break;
                     }
                 default:
+                    //Show success message.
                     MessageBox.Show("A könyv sikeresen visszavéve!",
                                     "Sikeres könyvleadás!",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Asterisk);
+                    //Update the archivated borrowing data.
+                    ArchiveData save = ArchiveDataProvider.GetSpecificData(_selectedBook.Id, _selectedPerson.Id);
+                    save.ReturnedAt = DateTime.Now;
+                    LibraryDataProvider.UpdateData<ArchiveData>(LibraryDataProvider.archiveUrl, save, save.Id);
+                    //Update the view.
                     UpdateBooks();
                     break;
             }
-            //Update the archivated borrowing data.
-            //TODO
         }
 
         // Add/Update/Delete books

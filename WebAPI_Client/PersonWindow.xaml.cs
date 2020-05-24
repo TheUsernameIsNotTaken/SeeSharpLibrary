@@ -36,12 +36,18 @@ namespace Admin_Client
                 UpdateButton.Visibility = Visibility.Collapsed;
                 DeleteButton.Visibility = Visibility.Collapsed;
             }
+
+            //Allow editing
+            SetFocusable(true);
         }
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             if (ValidatePerson())
             {
+                //Cannot allow editing while saving
+                SetFocusable(false);
+
                 //Create the person.
                 _person.FirstName = FirstNameTextBox.Text;
                 _person.LastName = LastNameTextBox.Text;
@@ -60,6 +66,9 @@ namespace Admin_Client
         {
             if (ValidatePerson())
             {
+                //Cannot allow editing while saving
+                SetFocusable(false);
+
                 //Update the person.
                 _person.FirstName = FirstNameTextBox.Text;
                 _person.LastName = LastNameTextBox.Text;
@@ -69,7 +78,22 @@ namespace Admin_Client
                 LibraryDataProvider.UpdateData<Person>(LibraryDataProvider.personUrl, _person, _person.Id);
 
                 //Update the archivated borrowing data if needed
-                //TODO
+                bool allowed = true;
+                //Only allow if set
+                if (allowed)
+                {
+                    //Get all occurance
+                    var occurances = ArchiveDataProvider.GetManyBySingleId(false, _person.Id);
+                    foreach (var occurance in occurances)
+                    {
+                        //Update
+                        occurance.FirstName = FirstNameTextBox.Text;
+                        occurance.LastName = LastNameTextBox.Text;
+                        occurance.DateOfBirth = DateOfBirthDatePicker.SelectedDate.Value;
+                        //Save
+                        LibraryDataProvider.UpdateData<ArchiveData>(LibraryDataProvider.archiveUrl, occurance, occurance.Id);
+                    }
+                }
 
                 //Close the dialog window.
                 DialogResult = true;
@@ -85,14 +109,32 @@ namespace Admin_Client
                                             MessageBoxButtons.YesNo,
                                             MessageBoxIcon.Question);
 
-            //Update the archivated borrowing data if needed.
-            //TODO
-
             //Delete after validation. 
             if (result == System.Windows.Forms.DialogResult.Yes) 
-            { 
+            {
+                //Cannot allow editing while deleting
+                SetFocusable(false);
+
+                //Update the archivated borrowing data if needed
+                bool allowed = true;
+                //Only allow if set
+                if (allowed)
+                {
+                    //Get all occurance
+                    var occurances = ArchiveDataProvider.GetManyBySingleId(false, _person.Id);
+                    foreach (var occurance in occurances)
+                    {
+                        //Update
+                        occurance.BorrowerId = null;
+                        //Save
+                        LibraryDataProvider.UpdateData<ArchiveData>(LibraryDataProvider.archiveUrl, occurance, occurance.Id);
+                    }
+                }
+
+                //Delete from the database
                 LibraryDataProvider.DeleteData<Person>(LibraryDataProvider.personUrl, _person.Id);
 
+                //Close the bialog window
                 DialogResult = true;
                 Close();
             }
@@ -120,6 +162,13 @@ namespace Admin_Client
             }
 
             return true;
+        }
+
+        private void SetFocusable(bool isAllowed)
+        {
+            FirstNameTextBox.Focusable = isAllowed;
+            LastNameTextBox.Focusable = isAllowed;
+            DateOfBirthDatePicker.Focusable = isAllowed;
         }
     }
 }

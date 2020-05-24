@@ -26,6 +26,37 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //Get the most recent specific data with ids.
+        public static ArchiveData GetLastByIds(long bookId, long borrowerId)
+        {
+            using (var database = new ArchiveDataContext())
+            {
+                var manyData = database.Archive.Where(a => a.BookId == bookId).Where(a => a.BorrowerId == borrowerId).ToList();
+                var data = manyData.OrderByDescending(a => a.BorrowedAt).FirstOrDefault();
+                return data;
+            }
+        }
+
+        //Get a many data with a book id.
+        public static IList<ArchiveData> GetManyByBook(long bookId)
+        {
+            using (var database = new ArchiveDataContext())
+            {
+                var manyData = database.Archive.Where(a => a.BookId == bookId).ToList();
+                return manyData;
+            }
+        }
+
+        //Get a many data with a person id.
+        public static IList<ArchiveData> GetManyByPerson(long borrowerId)
+        {
+            using (var database = new ArchiveDataContext())
+            {
+                var manyData = database.Archive.Where(a => a.BorrowerId == borrowerId).ToList();
+                return manyData;
+            }
+        }
+
         //Add a single archived data.
         public static void AddData(ArchiveData data)
         {

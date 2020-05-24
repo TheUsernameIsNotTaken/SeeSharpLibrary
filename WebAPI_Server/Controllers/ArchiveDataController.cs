@@ -33,6 +33,54 @@ namespace WebAPI_Server.Controllers
             }
         }
 
+        //Send a specific archived data by the two ids.
+        [HttpGet("specific/{bookId}+{borrowerId}")]
+        public ActionResult<ArchiveData> GetSpecific(long bookId, long borrowerId)
+        {
+            var data = ArchiveDataRepository.GetLastByIds(bookId, borrowerId);
+            //Check successs
+            if (data != null)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        //Send a specific archived data by the book id.
+        [HttpGet("book/{bookId}")]
+        public ActionResult<ArchiveData> GetBook(long bookId)
+        {
+            var data = ArchiveDataRepository.GetManyByBook(bookId);
+            //Check successs
+            if (data != null)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        //Send a specific archived data by the person id.
+        [HttpGet("person/{borrowerId}")]
+        public ActionResult<ArchiveData> GetPerson(long borrowerId)
+        {
+            var data = ArchiveDataRepository.GetManyByPerson(borrowerId);
+            //Check successs
+            if (data != null)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         //Receive and store a single archived data.
         [HttpPost]
         public ActionResult Post(ArchiveData data)
