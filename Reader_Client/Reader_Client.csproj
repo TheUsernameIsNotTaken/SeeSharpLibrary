@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{77781D96-58D3-4DDA-9FCC-5D8DBFCC6515}</ProjectGuid>
+    <ProjectGuid>{1506CB8E-B9E0-427A-9715-DB301C1CDC32}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Admin_Client</RootNamespace>
-    <AssemblyName>Admin_Client</AssemblyName>
+    <RootNamespace>Reader_Client</RootNamespace>
+    <AssemblyName>Reader_Client</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -130,19 +130,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BookPickerWindow.xaml">
+    <Page Include="BookDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BookWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PersonWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PersonPickerWindow.xaml">
+    <Page Include="UserPickerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -150,21 +142,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BookPickerWindow.xaml.cs">
-      <DependentUpon>BookPickerWindow.xaml</DependentUpon>
+    <Compile Include="BookDataWindow.xaml.cs">
+      <DependentUpon>BookDataWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BookWindow.xaml.cs">
-      <DependentUpon>BookWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataProviders\ArchiveDataProvider.cs" />
-    <Compile Include="DataProviders\PersonDataProvider.cs" />
     <Compile Include="DataProviders\LibraryDataProvider.cs" />
     <Compile Include="DataProviders\BookDataProvider.cs" />
-    <Compile Include="PersonWindow.xaml.cs">
-      <DependentUpon>PersonWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PersonPickerWindow.xaml.cs">
-      <DependentUpon>PersonPickerWindow.xaml</DependentUpon>
+    <Compile Include="DataProviders\PersonDataProvider.cs" />
+    <Compile Include="UserPickerWindow.xaml.cs">
+      <DependentUpon>UserPickerWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

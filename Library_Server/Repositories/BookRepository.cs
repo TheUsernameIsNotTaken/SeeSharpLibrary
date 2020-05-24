@@ -46,6 +46,8 @@ namespace WebAPI_Server.Repositories
             }
         }
 
+        //TODO - ADD search by Author and Title
+
         //Get a list of books' data by it's borrower's Id.
         public static IList<Book> SearchBookByBorrower(long borrowerId)
         {

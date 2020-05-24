@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Admin_Client.DataProviders;
+using Reader_Client.DataProviders;
 using Library_Models;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
-namespace Admin_Client
+namespace Reader_Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class PersonPickerWindow : Window
+    public partial class UserPickerWindow : Window
     {
 
         private bool _searched;
         private IList<Person> _people;
+        private Person _selectedPerson;
 
-        public Person selectedPerson { get; private set; }
-
-        public PersonPickerWindow()
+        public UserPickerWindow()
         {
             InitializeComponent();
 
@@ -34,41 +35,20 @@ namespace Admin_Client
         }
 
         //Set the borrowing user
-        private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
+        private void BorrowedBooksButton_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedPerson == null)
+            if (_selectedPerson == null)
             {
-                MessageBox.Show("Kölcsönzés előtt kérem válassza ki, hogy ki akar kölcsönözni!",
-                                        "Kölcsönző nem található!",
-                                        MessageBoxButton.OK);
+                MessageBox.Show("Kölcsönzési adatok megtekintéséhez válasszon ki egy olvasót!",
+                                        "Olvasó nem található!",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
             }
             else
             {
-                DialogResult = true;
-                Close();
+                //Open a dialog window with the correct data. 
+                //TODO
             }
-        }
-
-        //Add/Update/Delete person
-        private void AddPersonButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (selectedPerson != null)
-            {
-                var window = new PersonWindow(selectedPerson);
-                if (window.ShowDialog() ?? false)
-                {
-                    UpdatePeople();
-                }
-            }
-            else
-            {
-                var window = new PersonWindow(null);
-                if (window.ShowDialog() ?? false)
-                {
-                    UpdatePeople();
-                }
-            }
-            PeopleListBox.UnselectAll();
         }
 
         //Search a person
@@ -81,7 +61,7 @@ namespace Admin_Client
         //Update the currently selected person
         private void PeopleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedPerson = PeopleListBox.SelectedItem as Person;
+            _selectedPerson = PeopleListBox.SelectedItem as Person;
         }
 
         //Update the person list
@@ -91,7 +71,7 @@ namespace Admin_Client
             PeopleListBox.ItemsSource = _people;
             _searched = false;
             SearchPersonTextBox.Text = string.Empty;
-            selectedPerson = null;
+            _selectedPerson = null;
         }
     }
 }

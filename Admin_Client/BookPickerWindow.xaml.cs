@@ -204,7 +204,8 @@ namespace Admin_Client
         //Show only the books borrowed by user
         private void ShowBorrowedButton_Click(object sender, RoutedEventArgs e)
         {
-            BookDataProvider.SearchBooksByBorrower(_selectedPerson.Id);
+            _books = BookDataProvider.SearchBooksByBorrower(_selectedPerson.Id);
+            BooksDataGrid.ItemsSource = _books;
         }
 
         //End the currently borrowing user's procces. Like a log-out.
@@ -268,7 +269,7 @@ namespace Admin_Client
         private void UpdateBooks()
         {
             //Update the list
-            _books = _searced ? LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/search/", CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
+            _books = _searced ? LibraryDataProvider.SearchByStringData<Book>(LibraryDataProvider.bookUrl + "/searchByCode/", CodeTextBox.Text) : LibraryDataProvider.GetAllData<Book>(LibraryDataProvider.bookUrl);
             BooksDataGrid.ItemsSource = _books;
             //No chosen item
             BooksDataGrid.UnselectAll();

@@ -54,7 +54,7 @@ namespace WebAPI_Server.Controllers
         }
 
         //Search books by their code.
-        [HttpGet("search/{code}")]
+        [HttpGet("searchByCode/{code}")]
         public ActionResult<IEnumerable<Book>> SearchByCode(string code)
         {
             var books = BookRepository.SearchBookByCode(code);
@@ -68,6 +68,8 @@ namespace WebAPI_Server.Controllers
                 return NotFound();
             }
         }
+
+        //TODO - ADD search by Author and Title
 
         //Search books by their borrower.
         [HttpGet("borrowed/{id}")]
