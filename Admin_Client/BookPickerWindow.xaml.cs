@@ -80,7 +80,7 @@ namespace Admin_Client
                     MessageBox.Show("Az olvasó sikeresen kikölcsönözte a könyvet az alábbi időpontig: " + updatedBook.ReturnUntil.ToString() + "!",
                                             "Sikeres kölcsönzés!",
                                             MessageBoxButtons.OK,
-                                            MessageBoxIcon.Asterisk);
+                                            MessageBoxIcon.Information);
 
                     //Archivate the borrowing data.
                     ArchiveData save = new ArchiveData

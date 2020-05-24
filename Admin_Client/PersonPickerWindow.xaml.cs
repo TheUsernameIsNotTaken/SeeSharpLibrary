@@ -2,7 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using Admin_Client.DataProviders;
-using Library_Models;
+using Library_Models;using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Admin_Client
 {
@@ -36,11 +37,15 @@ namespace Admin_Client
         //Set the borrowing user
         private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
         {
+
+            
+
             if (selectedPerson == null)
             {
                 MessageBox.Show("Kölcsönzés előtt kérem válassza ki, hogy ki akar kölcsönözni!",
                                         "Kölcsönző nem található!",
-                                        MessageBoxButton.OK);
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
             }
             else
             {

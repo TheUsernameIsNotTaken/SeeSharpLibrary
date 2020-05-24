@@ -62,48 +62,58 @@ namespace Reader_Client.DataProviders
         /// <returns>
         ///     <list>
         ///         <listheader>
-        ///             <term>Bool or Null</term>
-        ///             <description>Returns a bool value representing the success.</description>
+        ///             <term>integer</term>
+        ///             <description>Returns an int value representing the exit point.</description>
         ///         </listheader>
         ///         <item>
-        ///             <term>Null</term>
+        ///             <term>1</term>
         ///             <description>If the extending not possible because the book or the borrowing doesn't exist.</description>
         ///         </item>
         ///         <item>
-        ///             <term>False</term>
+        ///             <term>2</term>
         ///             <description>If the extending not possible because we already reached the maximum # of extends, or because it already has a late return penalty fee.</description>
         ///         </item>
         ///         <item>
-        ///             <term>True</term>
+        ///             <term>3</term>
+        ///             <description>If the extending not possible because the borrowing rules don't allow it. 
+        ///             <example>For example when the return date is more than a week into the future.</example>
+        ///             </description>
+        ///         </item>
+        ///         <item>
+        ///             <term>0</term>
         ///             <description>If the extending was successfull.</description>
         ///         </item>
         ///     </list>
         /// </returns>
-        public static bool? ExtendBorrow(Book book)
+        public static int ExtendBorrow(Book book)
         {
             if (book != null && book.BorrowerId != null){
                 if (book.TimesExtended < Book.MAXEXTENDTIMES && DateTime.Now < book.ReturnUntil)
                 {
-                    //Add an extra week, and increment the # of extends;
-                    book.ReturnUntil = book.ReturnUntil.Value.AddDays(7);
-                    book.TimesExtended++;
-                    //Update the data
-                    using (var client = new HttpClient())
+                    if (DateTime.Now > book.ReturnUntil.Value.AddDays(-7))
                     {
-                        var rawData = JsonConvert.SerializeObject(book);
-                        var content = new StringContent(rawData, Encoding.UTF8, "application/json");
-
-                        var response = client.PutAsync(_url + "/" + book.Id, content).Result;
-                        if (!response.IsSuccessStatusCode)
+                        //Add an extra week, and increment the # of extends;
+                        book.ReturnUntil = book.ReturnUntil.Value.AddDays(7);
+                        book.TimesExtended++;
+                        //Update the data
+                        using (var client = new HttpClient())
                         {
-                            throw new InvalidOperationException(response.StatusCode.ToString());
+                            var rawData = JsonConvert.SerializeObject(book);
+                            var content = new StringContent(rawData, Encoding.UTF8, "application/json");
+
+                            var response = client.PutAsync(_url + "/" + book.Id, content).Result;
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new InvalidOperationException(response.StatusCode.ToString());
+                            }
                         }
+                        return 0;
                     }
-                    return true;
+                    return 3;
                 }
-                return false;
+                return 2;
             }
-            return null;
+            return 1;
         }
 
         public static ReturnStatus Returnable(Book book, Person person)

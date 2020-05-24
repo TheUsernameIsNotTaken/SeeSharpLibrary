@@ -80,14 +80,31 @@ namespace Reader_Client
         {
             switch (BookDataProvider.ExtendBorrow(_selectedBook))
             {
-                case null:
-                    //TODO
+                case 1:
+                    MessageBox.Show("Sikertelen meghosszabbítás hibásm adatok miatt! Kérem keressen fel egy könyvtárost!",
+                                    "Hibás adatok!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                     break;
-                case false:
-                    //TODO
+                case 2:
+                    MessageBox.Show("Már nem hosszabbíthatja könyvkölcsönzését!" +
+                                    " Ez lehet azért, mert már elérte a maximális hosszabbítások számát, de azért is, mert már késedelmi díj megfizetésére kötelezett." +
+                                    " Kérem lépjen kapcsolatba egy könyvtárossal!",
+                                    "Hosszabbítás nem lehetséges!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    break;
+                case 3:
+                    MessageBox.Show("Csak a kölcsönzés lejárata előtti egy hétben hosszabbíthat!",
+                                    "Sikertelen hosszabbítás!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
                     break;
                 default:
-                    //TODO
+                    MessageBox.Show("Sikeresen meghosszabbította a kölcsönzése időtartamát.",
+                                    "Sikeres hosszabbítás!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
                     break;
             }
         }
