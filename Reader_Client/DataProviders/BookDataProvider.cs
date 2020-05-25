@@ -36,7 +36,7 @@ namespace Reader_Client.DataProviders
 
         //Extend an already existing borrowing data in a database on the server if allowed.
         /// <summary>
-        /// 
+        ///     Extend an already existing borrowing data in a database on the server if allowed.
         /// </summary>
         /// <param name="book">The book, which's borrow time we want to expend.</param>
         /// <param name="borrower">The person, who wants to extend the borrowing time.</param>
