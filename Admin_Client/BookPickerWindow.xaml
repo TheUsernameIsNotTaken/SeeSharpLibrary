@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Admin_Client"
         mc:Ignorable="d"
-        Title="BookPickerWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
+        Title="Könyvek kezelése" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
