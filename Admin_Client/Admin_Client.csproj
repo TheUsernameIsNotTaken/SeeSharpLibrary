@@ -157,7 +157,6 @@
       <DependentUpon>BookWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataProviders\ArchiveDataProvider.cs" />
-    <Compile Include="DataProviders\PersonDataProvider.cs" />
     <Compile Include="DataProviders\LibraryDataProvider.cs" />
     <Compile Include="DataProviders\BookDataProvider.cs" />
     <Compile Include="PersonWindow.xaml.cs">

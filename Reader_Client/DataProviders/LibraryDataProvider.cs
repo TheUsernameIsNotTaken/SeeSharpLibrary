@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using Library_Models;
 using Newtonsoft.Json;
 
 namespace Reader_Client.DataProviders
@@ -14,7 +12,7 @@ namespace Reader_Client.DataProviders
         public static string archiveUrl = "http://localhost:5000/api/archive";
 
         //Get a single data inside a database from the server by it's ID.
-        public static T GetSingleData<T>(string url, long id)
+        public static T GetSingleData<T>(string url, long id) where T : class
         {
             using (var client = new HttpClient())
             {
@@ -34,7 +32,7 @@ namespace Reader_Client.DataProviders
         }
 
         //Get a all data inside a database from the server
-        public static IList<T> GetAllData<T>(string url)
+        public static IList<T> GetAllData<T>(string url) where T : class
         {
             using (var client = new HttpClient())
             {
@@ -54,7 +52,7 @@ namespace Reader_Client.DataProviders
         }
 
         //Search multiple existing entries in the database on the server by a part of their data.
-        public static IList<T> SearchByStringData<T>(string searchUrl, string dataPart)
+        public static IList<T> SearchByStringData<T>(string searchUrl, string dataPart) where T : class
         {
             using (var client = new HttpClient())
             {

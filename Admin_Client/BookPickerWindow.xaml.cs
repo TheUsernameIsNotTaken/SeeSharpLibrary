@@ -215,6 +215,7 @@ namespace Admin_Client
         {
             _selectedPerson = null;
             SetUserVisibility();
+            UpdateBooks();
         }
 
         //Update the borrower's visibility parameters

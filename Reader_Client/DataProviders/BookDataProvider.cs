@@ -12,26 +12,6 @@ namespace Reader_Client.DataProviders
 
         private static string _url = LibraryDataProvider.bookUrl;
 
-        ////Get a single data inside a database from the server by it's code.
-        //public static Book GetSingleData(string code)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        var response = client.GetAsync(_url + "/get/" + code).Result;
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var rawData = response.Content.ReadAsStringAsync().Result;
-        //            var singleData = JsonConvert.DeserializeObject<Book>(rawData);
-        //            return singleData;
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidOperationException(response.StatusCode.ToString());
-        //        }
-        //    }
-        //}
-
         //Search multiple existing books in the database on the server by their borrower's Id.
         public static IList<Book> SearchBooksByBorrower(long id)
         {

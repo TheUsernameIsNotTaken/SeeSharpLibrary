@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Library_Models;
 using WebAPI_Server.Repositories;
@@ -41,22 +37,6 @@ namespace WebAPI_Server.Controllers
                 return NotFound();
             }
         }
-
-        ////Get a single book's data by it's code.
-        //[HttpGet("get/{code}")]
-        //public ActionResult<Book> GetByCode(string code)
-        //{
-        //    var book = BookRepository.GetBookByCode(code);
-        //    //Check successs
-        //    if (book != null)
-        //    {
-        //        return Ok(book);
-        //    }
-        //    else
-        //    {
-        //        return NotFound();
-        //    }
-        //}
 
         /* ------------------------- */
         /*      SEARCH WITH GET      */

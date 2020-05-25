@@ -26,64 +26,13 @@ namespace WebAPI_Server.Repositories
                 return book;
             }
         }
-        
-        ////Get a single book's data by
-        //public static Book GetBookByCode(string code)
-        //{
-        //    using (var database = new BookContext())
-        //    {
-        //        var book = database.Books.Where(b => b.Code == code).FirstOrDefault();
-        //        return book;
-        //    }
-        //}
 
-        ////Get a list of books' data by the part of their code
-        //public static IList<Book> SearchBookByCode(string code)
-        //{
-        //    using (var database = new BookContext())
-        //    {
-        //        var books = database.Books.Where(b => b.Code.Contains(code)).ToList();
-        //        return books;
-        //    }
-        //}
-
-        ////TODO - ADD search by Author and Title
-        ////Get a list of books' data by the part of their code
-        //public static IList<Book> SearchBookByAuthor(string author)
-        //{
-        //    using (var database = new BookContext())
-        //    {
-        //        var books = database.Books.Where(b => b.Author.Contains(author)).ToList();
-        //        return books;
-        //    }
-        //}
-
-        ////Get a list of books' data by the part of their code
-        //public static IList<Book> SearchBookByTitle(string title)
-        //{
-        //    using (var database = new BookContext())
-        //    {
-        //        var books = database.Books.Where(b => b.Title.Contains(title)).ToList();
-        //        return books;
-        //    }
-        //}
-
-        //Get a list of books' data by the part of their code
+        //Get a list of books' data by a part of them
         public static IList<Book> SearchBookByExpression(Expression<System.Func<Book, bool>> expression)
         {
             using (var database = new BookContext())
             {
                 var books = database.Books.Where(expression).ToList();
-                return books;
-            }
-        }
-
-        //Get a list of books' data by it's borrower's Id.
-        public static IList<Book> SearchBookByBorrower(long borrowerId)
-        {
-            using (var database = new BookContext())
-            {
-                var books = database.Books.Where(b => b.BorrowerId.Equals(borrowerId)).ToList();
                 return books;
             }
         }

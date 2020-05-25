@@ -118,7 +118,6 @@
     <Compile Include="DataProviders\ArchiveDataProvider.cs" />
     <Compile Include="DataProviders\LibraryDataProvider.cs" />
     <Compile Include="DataProviders\BookDataProvider.cs" />
-    <Compile Include="DataProviders\PersonDataProvider.cs" />
     <Compile Include="UserPickerWindow.xaml.cs">
       <DependentUpon>UserPickerWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
