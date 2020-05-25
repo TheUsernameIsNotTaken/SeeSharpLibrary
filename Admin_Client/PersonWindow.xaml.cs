@@ -55,7 +55,7 @@ namespace Admin_Client
 
                 //Send the person to save it into the database.
                 LibraryDataProvider.CreateData(LibraryDataProvider.personUrl, _person);
-
+                
                 //Close the dialog window.
                 DialogResult = true;
                 Close();
@@ -145,22 +145,39 @@ namespace Admin_Client
             //First name should not be empty.
             if (string.IsNullOrEmpty(FirstNameTextBox.Text))
             {
-                MessageBox.Show("A keresztnév megadása kötelező!");
+                MessageBox.Show("A keresztnév megadása kötelező!",
+                                "Hiányzó adatok!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 return false;
             }
             //Last name should not be empty.
             if (string.IsNullOrEmpty(LastNameTextBox.Text))
             {
-                MessageBox.Show("A vezetéknév megadása kötelező!");
+                MessageBox.Show("A vezetéknév megadása kötelező!",
+                                "Hiányzó adatok!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 return false;
             }
             //Please select a date of birth date.
-            if (!DateOfBirthDatePicker.SelectedDate.HasValue)
+            if (DateOfBirthDatePicker.SelectedDate.HasValue is false)
             {
-                MessageBox.Show("A születési dátum megadása kötelező!");
+                MessageBox.Show("A születési dátum megadása kötelező!",
+                                "Hiányzó adatok!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 return false;
             }
-
+            //Validate the values
+            if( Person.IsValidName(FirstNameTextBox.Text, LastNameTextBox.Text) is false || Book.IsDateTextValid(DateOfBirthDatePicker.Text) == null)
+            {
+                MessageBox.Show("Nem megfelelően töltötte ki a mezőket!",
+                                "Rossz adatok!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return false;
+            }
             return true;
         }
 

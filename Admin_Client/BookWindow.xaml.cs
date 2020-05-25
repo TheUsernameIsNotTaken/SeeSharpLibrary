@@ -169,13 +169,22 @@ namespace Admin_Client
             if (!YearPicker.SelectedDate.HasValue)
             {
                 var result = MessageBox.Show("A kiadási év megadása nem kötelező, de ajánlott.\nBiztos hogy kiadási év megadása nélkül akarja elmenteni a könyvet?",
-                                            "Megerősítés",
+                                            "Megerősíti?",
                                             MessageBoxButtons.YesNo,
                                             MessageBoxIcon.Question);
                 if(result == System.Windows.Forms.DialogResult.No)
                 {
                     return false;
                 }
+            }
+            //Validate the values
+            if (Book.IsDateTextValid(YearPicker.Text) == null)
+            {
+                MessageBox.Show("Nem megfelelően töltötte ki a dátum mezőt!",
+                                "Rossz adatok!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return false;
             }
 
             return true;

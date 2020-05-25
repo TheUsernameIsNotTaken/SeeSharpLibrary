@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 
 namespace Library_Models
@@ -23,7 +25,7 @@ namespace Library_Models
         public long Id { get; set; }
         /// <summary>
         ///     Property <c>FirstName</c> represents the Person's first name.<br></br>
-        ///     The <c>Person</c> class does not support secondary names!!! Please don't use any.<br></br>
+        ///     The <c>Person</c> class does not support secondary names and titles!!! Please don't use any.<br></br>
         ///     It can be 30 caracters at max.<br></br>
         ///     It is required in every modell.
         /// </summary>
@@ -35,6 +37,7 @@ namespace Library_Models
         public string FirstName { get; set; }
         /// <summary>
         ///     Property <c>LastName</c> represents the Person's last name.<br></br>
+        ///     The <c>Person</c> class does not support secondary names and titles!!! Please don't use any.<br></br>
         ///     It can be 30 caracters at max.<br></br>
         ///     It is required in every modell.
         /// </summary>
@@ -101,14 +104,18 @@ namespace Library_Models
         /// <returns>
         ///     Retruns true if the name is valid, false othervise.
         /// </returns>
-        public bool IsNameValid()
+        public static bool IsValidName(string firstName, string lastName)
         {
-            var simpleName = new Regex("^[A-Z][a-z]*$");
-            if (simpleName.Match(FirstName).Success && simpleName.Match(LastName).Success)
-            {
-                return true;
-            }
-            return false;
+            return !string.IsNullOrEmpty(firstName)
+                && !string.IsNullOrEmpty(lastName)
+                && firstName.All(char.IsLetter)
+                && lastName.All(char.IsLetter)
+                && char.IsUpper(firstName.First())
+                && char.IsUpper(lastName.First())
+                && firstName.Substring(1).All(char.IsLower)
+                && lastName.Substring(1).All(char.IsLower)
+                && firstName.Length >= 2 && firstName.Length <=30
+                && lastName.Length >= 2 && lastName.Length <= 30;
         }
     }
 }
