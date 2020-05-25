@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\Book\20200525103723_BookAddedStaticFinction.cs" />
+    <Compile Remove="Migrations\Book\20200525103723_BookAddedStaticFinction.Designer.cs" />
     <Compile Remove="Migrations\Person\20200523140354_TestIfNeeded.cs" />
     <Compile Remove="Migrations\Person\20200523140354_TestIfNeeded.Designer.cs" />
     <Compile Remove="Migrations\Person\20200523155642_AddedExtendTime.cs" />

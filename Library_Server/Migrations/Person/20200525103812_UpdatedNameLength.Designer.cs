@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI_Server.Repositories;
 
-namespace Library_Server.Migrations
+namespace WebAPI_Server.Migrations
 {
-    [DbContext(typeof(ArchiveDataContext))]
-    partial class ArchiveDataContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(PersonContext))]
+    [Migration("20200525103812_UpdatedNameLength")]
+    partial class UpdatedNameLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,31 +21,12 @@ namespace Library_Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Library_Models.ArchiveData", b =>
+            modelBuilder.Entity("Library_Models.Person", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("BookId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("BorrowedAt")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("BorrowerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -58,16 +41,9 @@ namespace Library_Server.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<DateTime?>("ReturnedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Archive");
+                    b.ToTable("People");
                 });
 #pragma warning restore 612, 618
         }
