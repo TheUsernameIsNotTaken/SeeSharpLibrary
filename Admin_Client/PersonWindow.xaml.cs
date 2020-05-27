@@ -170,7 +170,7 @@ namespace Admin_Client
                 return false;
             }
             //Validate the values
-            if( Person.IsValidName(FirstNameTextBox.Text, LastNameTextBox.Text) is false || Book.IsDateTextValid(DateOfBirthDatePicker.Text) == null)
+            if( Person.IsValidName(FirstNameTextBox.Text, LastNameTextBox.Text) is false || Book.IsDateTextValid(DateOfBirthDatePicker.Text, false) == null)
             {
                 MessageBox.Show("Nem megfelelően töltötte ki a mezőket!",
                                 "Rossz adatok!",

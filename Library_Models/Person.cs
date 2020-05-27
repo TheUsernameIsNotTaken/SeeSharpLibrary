@@ -101,6 +101,8 @@ namespace Library_Models
         /// <summary>
         ///     Determines if a Person's name is a valid name or not.
         /// </summary>
+        /// <param name="firstName">The person's first name.</param>
+        /// <param name="lastName">The person's last name.</param>
         /// <returns>
         ///     Retruns true if the name is valid, false othervise.
         /// </returns>

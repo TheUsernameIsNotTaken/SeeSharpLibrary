@@ -28,7 +28,7 @@ namespace Library_Models.Tests
 
             // Act
             //Execute the method to be tested
-            var actual = Book.IsDateTextValid(test.DateOfBirth.Date.ToString());
+            var actual = Book.IsDateTextValid(test.DateOfBirth.Date.ToString(), false);
             //Create a method, what supposedly gives the same result - Bad because allows only englidh caracters
             DateTime temp;
             if (DateTime.TryParse(test.DateOfBirth.ToString().Split(' ')[0], out temp))
@@ -69,7 +69,7 @@ namespace Library_Models.Tests
 
             // Act
             //Execute the method to be tested
-            var actual = Book.IsDateTextValid(test.ReturnUntil.ToString());
+            var actual = Book.IsDateTextValid(test.ReturnUntil.ToString(), true);
             //Create a method, what supposedly gives the same result - Bad because allows only englidh caracters
             DateTime temp;
             if (DateTime.TryParse(test.ReturnUntil.ToString(), out temp))

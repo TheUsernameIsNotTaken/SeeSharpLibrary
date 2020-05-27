@@ -183,21 +183,28 @@ namespace Library_Models
         /// <summary>
         ///     Determines if a Text can be converted into DateTime.
         /// </summary>
+        /// <param name="dateTimeString">The string what we want to convert to DateTime.</param>
+        /// <param name="canBeFuture">A switch, if the Date and Time is allowed to be in the future, or not.</param>
         /// <returns>
         ///     Retruns the converted DateTime value if it can be converted.<br></br>
         ///     Returns null if it cannot.
         /// </returns>
-        public static DateTime? IsDateTextValid(string dateTimeString)
+        public static DateTime? IsDateTextValid(string dateTimeString, bool canBeFuture)
         {
             DateTime temp;
+            DateTime now = DateTime.Now;
             if (DateTime.TryParse(dateTimeString, out temp))
             {
-                return temp;
+                if (canBeFuture)
+                {
+                    return temp;
+                }
+                if (temp.Date < now.Date && temp.TimeOfDay < now.TimeOfDay)
+                {
+                    return temp;
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
     }
 }

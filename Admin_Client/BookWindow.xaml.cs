@@ -178,7 +178,7 @@ namespace Admin_Client
                 }
             }
             //Validate the values
-            if (Book.IsDateTextValid(YearPicker.Text) == null)
+            if (Book.IsDateTextValid(YearPicker.Text, false) == null)
             {
                 MessageBox.Show("Nem megfelelően töltötte ki a dátum mezőt!",
                                 "Rossz adatok!",
